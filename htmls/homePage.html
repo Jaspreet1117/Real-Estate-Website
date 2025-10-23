@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>document</title>
+    <link rel="stylesheet" href="../css/homePage.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  </head>
+<body>
+    <nav>
+        <div class="navBar">
+            <div class="leftNavTab">
+                <div class="logo">
+                    <img class="logoImage" src="../images/WhatsApp_Image_2025-09-08_at_14.32.09_af6a30c5-removebg-preview.png" alt="HomeFindr">
+                </div>
+            </div>
+            
+            <div class="rightNavTab">
+                <div class="postProperty">
+                    <button id="postPropertyButton">Post Property</button>
+                </div>
+
+                <div class="contactUs">
+                    <button class="contactUs Button"><i class="fa-solid fa-headset"></i></button>
+                </div>
+                <div class="profile">
+                   <a href="profilePage.html"><button class="profile Button" ><i class="fa-solid fa-user"></i></button></a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <div class="bannerImage"></div>
+            <!--<img src="../images/landingPicture.jpg" alt="bannerImage">--->
+        <form>
+            <div class="locationBox">
+                    <div class="residential"> 
+
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                All Residential
+                            </button>
+                            <ul class="dropdown-menu">
+                                <table >
+                                    <tr>
+                                        <td>
+                                            <li>
+                                                <label class="dropdown-checkbox">
+                                                <input type="checkbox" class="dropdown-item" value="allIndia"> All India
+                                                </label>
+                                            </li>
+                                        </td>
+                                        <td>
+
+                                            <li>
+                                                <label class="dropdown-checkbox">
+                                                <input type="checkbox" class="dropdown-item" value="flat"> Flat/Apartment
+                                                </label>
+                                            </li>
+                                        </td>
+                                        <td>
+
+                                            <li>
+                                                <label class="dropdown-checkbox">
+                                                <input type="checkbox" class="dropdown-item" value="independentFloor"> Independent/Builder Floor
+                                                </label>
+                                            </li>
+                                        </td>
+                                        <td>
+
+                                            <li>
+                                                <label class="dropdown-checkbox">
+                                                <input type="checkbox" class="dropdown-item" value="independentHouse"> Independent House
+                                                </label>
+                                            </li>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <li>
+                                                <label class="dropdown-checkbox">
+                                                <input type="checkbox" class="dropdown-item" value="residentialLand"> Residential Land
+                                                </label>
+                                            </li>
+
+                                        </td>
+                                        <td>
+                                            <li>
+                                                <label class="dropdown-checkbox">
+                                                <input type="checkbox" class="dropdown-item" value="studioApartment"> 1 RK/ Studio Apartment
+                                                </label>
+                                            </li>
+
+                                        </td>
+                                        <td>
+                                            <li>
+                                                <label class="dropdown-checkbox">
+                                                <input type="checkbox" class="dropdown-item" value="farmHouse"> Farm House
+                                                </label>
+                                            </li>
+                                        </td>
+                                        <td>
+                                            <li>
+                                                <label class="dropdown-checkbox">
+                                                <input type="checkbox" class="dropdown-item" value="servicedApartment"> Serviced Apartments
+                                                </label>
+                                            </li>
+
+                                        </td>
+
+                                    </tr>
+                                </table>
+                            </ul>
+
+                        </div>
+                        <!-- <select class="allResidential" value="allResidential" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <option class="dropdown-item" value="allIndia">All India</option>
+                            <option class="dropdown-item" value="flat">Flat/Apartment</option>
+                            <option class="dropdown-item" value="independentFloor">Independent/Builder Floor</option>
+                            <option class="dropdown-item" value="independentHouse">Independent House</option>
+                            <option class="dropdown-item" value="residentialLand">Residential Land</option>
+                            <option class="dropdown-item" value="studioApartment">1 RK/ Studio Apartment</option>
+                            <option class="dropdown-item" value="farmHouse">Farm House</option>
+                            <option class="dropdown-item" value="servicedApartment">Serviced Apartments</option>
+                            <option class="dropdown-item" value="other">Other</option>
+                        </select> -->
+                    </div>
+                    <div class="inputLocation">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="search" value="">
+                    </div>
+                    <div class="search">
+                        <button class="microphone ai"><i class="fa-solid fa-microphone"></i></button>
+                        <button class="map ai"><i class="fa-solid fa-location-dot"></i></button>
+                        <button class="robot ai"><i class="fa-solid fa-robot"></i></button>
+                        <button class="searchButton">Search</button>
+                    </div>
+            </div>
+        </form>
+        <p class="getStarted">GET STARTED WITH EXPLORING REAL ESTATE OPTIONS</p>
+        <div class="options">
+            <div class="option">
+                <div class="buy op">
+                    <a href="" >
+                        <img class="imageSetting" src="../images/buy.jpg" alt="buy house">
+                    </a>
+                    <div class="sub-options">
+                        <div class="sub-option">House</div>
+                        <div class="sub-option">Flat</div>
+                        <div class="sub-option">Bunglow</div>
+                        <div class="sub-option">Villa</div>
+                    </div>
+                </div>
+                <p>Buy</p>
+            </div>
+            <div class="option">
+                <div class="rent op">
+                    <a href="">
+                        <img class="imageSetting" src="../images/rent.jpg" alt="rent house">
+                    </a>
+                    <div class="sub-options">
+                        <div class="sub-option">House</div>
+                        <div class="sub-option">Flat</div>
+                        <div class="sub-option">Bunglow</div>
+                        <div class="sub-option">Villa</div>
+                    </div>
+                </div>
+                <p>Rent</p>
+            </div>
+            <div class="option">
+                <div class="pg op">
+                    <a href="">
+                        <img class="imageSetting" src="../images/pg.jpg" alt="pg & Co-living">
+                    </a>
+                    <div class="sub-options">
+                        <div class="sub-option">2 Bed</div>
+                        <div class="sub-option">4 Bed</div>
+                        
+                    </div>
+                </div>
+                <p>PG and Co-living</p>
+            </div>
+            <div class="option ">
+                <div class="buyCommercial op">
+                    <a href="">
+                        <img class="imageSetting" src="../images/buyCommerical.jpg" alt="buy Commerical space">
+                    </a>
+                </div>
+                <p>Buy Commercial space</p>
+            </div>
+            <!-- <div class="options">
+                <div class="rentCommercial">
+                    <a href="">
+                        <img class="imageSetting" src="rentCommercial.jpeg" alt="Lease Commerical space">
+                    </a>
+                </div>
+                <p>Lease Commerical space</p>
+            </div> -->
+        </div>
+        <div class="newArrivals">
+            <div class="heading">
+                <h3 style="font-weight: bold;">
+                    <i class="fa-solid fa-building"></i> New Arrival Projects
+                </h3>
+            </div>
+            <div class="newArrival">
+
+                <div class="arrivalObj">
+                    <div class="tag">
+                        <div class="tagContent">
+                            <p>New Arrival</p>
+                        </div>
+                    </div>
+
+                    <div class="main">
+                        <div class="leftImage">
+                            <img src="../images/Ist.jpg" style="height: 70px; width: 70px; border-radius: 50px;" alt="Ananda The Legacy" >
+                        </div>
+                        <div class="rightData">
+                            <h5>Ananda The Legacy</h5>
+                            <p>Manikonda, Hyderabad</p>
+                            <strong>₹1.2 - 1.84 CR</strong> | <span>2,3 BHK Apartments</span>
+                            <p><mark style="background-color: rgba(218, 165, 32, 0.727);">10.9%</mark>price inc in last 3 months</p>
+                        </div>
+                    </div>
+
+                    <div class="footer">
+                        <div class="leftFooter">
+                            <h6>Get preffered options @zero brokerage</h6>
+                        </div>
+                        <div class="rightFooter">
+                            <button class="viewNumber">View Number</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrivalObj">
+                    <div class="tag">
+                        <div class="tagContent">
+                            <p>New Arrival</p>
+                        </div>
+                    </div>
+
+                    <div class="main">
+                        <div class="leftImage">
+                            <img src="../images/2nd.jpg" style="height: 70px; width: 70px; border-radius: 50px;" alt="Ananda The Legacy" >
+                        </div>
+                        <div class="rightData">
+                            <h5>Assotech Avenue 07</h5>
+                            <p>Hanspal, Bhubaneshwar</p>
+                            <strong>₹1.6 - 2.14 CR</strong> | <span>3 BHK Apartments</span>
+                            <p><mark style="background-color:  rgba(218, 165, 32, 0.727);">19.4%</mark> price inc in last 3 months</p>
+                        </div>
+                    </div>
+
+                    <div class="footer">
+                        <div class="leftFooter">
+                            <h6>Get preffered options @zero brokerage</h6>
+                        </div>
+                        <div class="rightFooter">
+                            <button class="viewNumber">View Number</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="arrivalObj">
+                    <div class="tag">
+                        <div class="tagContent">
+                            <p>New Arrival</p>
+                        </div>
+                    </div>
+
+                    <div class="main">
+                        <div class="leftImage">
+                            <img src="../images/3rd.jpg" style="height: 70px; width: 70px; border-radius:  50px;" alt="Ananda The Legacy" >
+                        </div>
+                        <div class="rightData">
+                            <h5>Rosero Elena</h5>
+                            <p>Zirakpur, Chandigarh</p>
+                            <strong>99.0 L</strong> | <span>3 BHK Apartments</span>
+                            <p><mark style="background-color: rgba(218, 165, 32, 0.727);">11.0%</mark> price inc in last 3 months</p>
+                        </div>
+                    </div>
+
+                    <div class="footer">
+                        <div class="leftFooter">
+                            <h6>Get preffered options @zero brokerage</h6>
+                        </div>
+                        <div class="rightFooter">
+                            <button class="viewNumber">View Number</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- <footer>
+        <div class="pageFooter"> -->
+            
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+            <h4>HomeFinder</h4>
+            <ul>
+                <li><a href="#">Mobile Apps</a></li>
+                <li><a href="#">Our Services</a></li>
+                <li><a href="#">Price Trends</a></li>
+                <li><a href="#">Post your Property</a></li>
+                <li><a href="#">Real Estate Investments</a></li>
+                <li><a href="#">Articles</a></li>
+            </ul>
+            </div>
+
+        
+            <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Careers with us</a></li>
+                <li><a href="#">Terms & Conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Feedback</a></li>
+            </ul>
+            </div>
+
+        
+            <div class="footer-col">
+            <h4>Our Partners</h4>
+            <ul>
+                <li><a href="#">Naukri.com - Jobs</a></li>
+                <li><a href="#">Jeevansathi.com - Matrimonials</a></li>
+                <li><a href="#">Shiksha.com - Education</a></li>
+                <li><a href="#">Policybazaar.com - Insurance</a></li>
+                <li><a href="#">Proptiger</a></li>
+                <li><a href="#">Realtor.com</a></li>
+            </ul>
+            </div>
+            <div class="footer-col">
+            <h4>Contact Us</h4>
+            <p>Toll Free: <strong>1800 41 99099</strong><br>
+                Mon-Sun (9:30 AM - 6:30 PM)<br>
+                Email: <a href="mailto:homefindrlimited@gmail.com?subject=enquiry&body=Please send me your latest real estate details"">feedback@homefindr.com</a></p>
+
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            ©2025 HomeFinder Pvt. Ltd | Designed with 🤍
+        </div>
+        <!-- </footer> -->
+            <!-- HomeFindr@2025
+        </div> -->
+    </footer>
+    <script src="https://kit.fontawesome.com/0ed85649cd.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-CiqQ2tH4yWkNulQf2jrwL+mZ1mRrFfHt7+nyH+oIjgguBvwnVYAT0a0jN6pxdEN2" crossorigin="anonymous"></script>
+    <!---<script src="https://kit.fontawesome.com/0ed85649cd.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK" crossorigin="anonymous"></script>--->
+</body>
+</html>

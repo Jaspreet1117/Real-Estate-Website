@@ -1,0 +1,755 @@
+/* General Styling */
+:root {
+    --primary-color: #007bff; /* Blue for primary actions/highlights */
+    --secondary-color: #6c757d; /* Gray for secondary text/borders */
+    --background-color: #f8f9fa; /* Light background */
+    --card-background: #ffffff; /* White card background */
+    --text-color: #343a40; /* Dark text */
+    --border-color: #dee2e6;
+    --success-color: #28a745; /* Green for success/verified */
+    --danger-color: #dc3545; /* Red for alerts */
+    --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #005ca8;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  z-index: 1000;
+}
+
+#logo img {
+  height: 40px;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.4rem 0.7rem;
+  width: 45%;
+  height: 42px;
+}
+
+.search-bar select {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: gray;
+  font-weight: 500;
+}
+
+.search-icon {
+  color: gray;
+  margin: 0 6px;
+}
+
+#search-input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.mic-icon {
+  color: gray;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 6px;
+}
+
+/* Post Property */
+#post {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  background-size: 300% 100%;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Profile */
+.profile-btn {
+  background: #fff;
+  color: navy;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* ===== MAIN LAYOUT ===== */
+.container {
+  display: flex;
+  margin-top: 75px;
+  height: calc(100vh - 75px);
+}
+
+/* LEFT FILTER PANEL */
+.filter-panel {
+  width: 30%;
+  background: #fff;
+  border-right: 2px solid #e0e0e0;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.filter-panel h2 {
+  color:#005ca8;
+  margin-bottom: 1rem;
+}
+
+/* Each Filter */
+.filter {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 0.8rem 0;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 600;
+  color: #222;
+}
+
+.filter-header i {
+  transition: transform 0.3s ease;
+}
+
+.filter.active .filter-header i {
+  transform: rotate(180deg);
+}
+
+/* Hidden by default */
+.filter-content {
+  display: none;
+  margin-top: 0.7rem;
+}
+
+.filter.active .filter-content {
+  display: block;
+}
+
+/* Dropdown Styles */
+select {
+  width: 100%;
+  padding: 0.4rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: gray;
+}
+
+/* Budget */
+.budget-range {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 22px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.toggle-switch input:checked + .slider {
+  background-color: #005ca8;
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* BHK Buttons */
+.bhk-options button {
+  background: #f3f3f3;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 4px 10px;
+  margin: 4px;
+  font-size: 0.85rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.bhk-options button:hover {
+  background: #e0e0e0;
+}
+
+/* RIGHT PROPERTY SECTION */
+.property-list {
+  width: 60%;
+  padding: 1.5rem;
+  overflow-y: auto;
+  background: #fafafa;
+}
+
+.property-list h2 {
+  color: #005ca8;
+}
+/* Desktop search bar width + spacing */
+@media (min-width: 1024px) {
+  .search-bar {
+    width: 60%;
+    margin: 0 2.5%; /* space left & right */
+  }
+
+  .container {
+    gap: 5%; /* 5% between left filter panel and property list */
+  }
+}
+
+/* Buttons for property type and BHK */
+.property-types button,
+.bhk-options button {
+  background: #f3f3f3;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 4px 10px;
+  margin: 4px;
+  font-size: 0.85rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.property-types button:hover,
+.bhk-options button:hover {
+  background: #e0e0e0;
+}
+
+.property-types button.active,
+.bhk-options button.active {
+  background:#005ca8;
+  color: white;
+  border-color:#005ca8;
+}
+
+/* Area Filter */
+.area-range {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.area-range input {
+  width: 100px;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.area-range select {
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+/* Desktop search bar width + spacing */
+@media (min-width: 1024px) {
+  .search-bar {
+    width: 60%;
+    margin: 0 2.5%; /* side spacing */
+    gap: 0.5rem;
+  }
+
+  .search-bar select {
+    width: auto; /* only content width */
+    padding: 0 0.5rem;
+  }
+
+  #search-input {
+    flex: 1; /* fill remaining space */
+  }
+
+  .container {
+    gap: 5%; /* space between left panel and property list */
+  }
+}
+
+/* Filter panel padding */
+.filter-panel {
+  width: 30%;
+  background: #fff;
+  border-right: 2px solid #e0e0e0;
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem; /* extra left padding */
+  margin-left: 5rem;
+  overflow-y: auto;
+}
+
+/* Buttons for property type, BHK, status, furnishing */
+.property-types button,
+.bhk-options button,
+.status-options button,
+.furnishing-options button {
+  background: #f3f3f3;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 4px 10px;
+  margin: 4px;
+  font-size: 0.85rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.property-types button:hover,
+.bhk-options button:hover,
+.status-options button:hover,
+.furnishing-options button:hover {
+  background: #e0e0e0;
+}
+
+.property-types button.active,
+.bhk-options button.active,
+.status-options button.active,
+.furnishing-options button.active {
+  background: #005ca8;
+  color: white;
+  border-color: #005ca8;
+}
+
+/* Area Filter */
+.area-range {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.area-range input {
+  width: 100px;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.area-range select {
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+/* Property Card 2 (Active in HTML) */
+.property-card {
+    display: flex;
+    background-color: var(--card-background);
+    border-radius: 8px;
+    box-shadow: var(--shadow-light);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+/* Left Picture/Carousel Section */
+.leftPicture {
+    width: 350px; /* Fixed width for the image part */
+    height: 397px; /* Fixed height for consistency */
+    flex-shrink: 0;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    transition: background-image 0.5s ease-in-out; /* For smooth slide transition */
+}
+
+/* Image Slides (Alternative: using background image on .leftPicture) */
+.leftPicture .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.leftPicture .slide.active {
+    opacity: 1;
+}
+
+#topSection {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+#feature {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    opacity: 0.9;
+}
+
+#topSection i {
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Navigation Arrows */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    z-index: 15;
+    padding: 10px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    transition: color 0.3s;
+}
+
+.arrow:hover {
+    color: var(--primary-color);
+}
+
+.left { left: 5px; }
+.right { right: 5px; }
+
+/* Dots Indicator */
+.dots {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dot.active {
+    background-color: white;
+    width: 10px;
+    height: 10px;
+}
+
+#bottomSection {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 0.85rem;
+    z-index: 10;
+}
+
+/* Right Content Section */
+.rightPicture {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#topHeading {
+    /* Contains all info above the action buttons */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mainInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#propertyName {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+#saleType {
+    background-color: var(--success-color);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.infoWhere h6 {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    font-weight: normal;
+}
+
+.details {
+    display: flex;
+    gap: 20px;
+    padding: 10px 0;
+    border-top: 1px dashed var(--border-color);
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.priceApart {
+    display: flex;
+    flex-direction: column;
+}
+
+#apartment {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+}
+
+#price {
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.location {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    position: relative;
+    padding-bottom: 5px; /* Space for the hover effect indicator */
+}
+
+/* Hover for Location - Advanced CSS required for the "on hover the whole element appear by when no hover then 2 with +3 shown" requirement, but here's a start for basic styling */
+.location b {
+    color: var(--primary-color);
+}
+
+.description {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    overflow: hidden;
+    /* max-height: 60px; for initial display of text */
+    /* transition: max-height 0.3s ease-in-out; */
+}
+
+.description.expanded {
+    max-height: 500px; /* Expands when class is added */
+}
+
+.botton.section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.builder {
+    flex-grow: 1;
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    line-height: 1.3;
+}
+
+.builder b {
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+#bro1, #veiw {
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, opacity 0.3s;
+    font-size: 1rem;
+}
+
+#bro1 {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#bro1:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+#veiw {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    color: white;
+}
+
+#veiw:hover {
+    opacity: 0.9;
+}
+
+
+/* --- RESPONSIVENESS --- */
+@media (max-width: 1200px) {
+    .container {
+        padding: 20px;
+    }
+    .leftPicture {
+        width: 300px;
+        height: 280px;
+    }
+}
+
+@media (max-width: 992px) {
+    nav {
+        padding: 10px 20px;
+    }
+    .search-bar {
+        max-width: 400px;
+        margin: 0 10px;
+    }
+    #post {
+        margin-right: 10px;
+        padding: 8px 12px;
+    }
+    .container {
+        flex-direction: column;
+    }
+    .filter-panel {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .property-card {
+        flex-direction: column;
+    }
+    .leftPicture {
+        width: 100%;
+        height: 250px;
+        border-radius: 8px 8px 0 0;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        flex-wrap: wrap;
+        padding: 10px;
+        justify-content: center;
+    }
+    #logo {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .search-bar {
+        order: 3;
+        width: 100%;
+        margin: 10px 0;
+        max-width: 100%;
+    }
+    #post, .profile-btn {
+        order: 2;
+        margin: 0 5px;
+    }
+    .botton.section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .builder {
+        text-align: center;
+    }
+    #bro1, #veiw {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .budget-range, .area-range {
+        flex-direction: column;
+    }
+    .area-range input[type="number"], .area-range select {
+        max-width: 100%;
+    }
+}
+.filter-panel {
+  width: 30%;
+  background: #fff;
+  border-right: 2px solid #e0e0e0;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+.property-card{
+    margin-top: 23px;
+}

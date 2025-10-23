@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page - Real Estate</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+    }
+    header {
+      background: linear-gradient(135deg, #0066cc, #00aaff);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      margin: 0;
+    }
+    .profile-card {
+      background: white;
+      margin: -30px auto 20px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+    }
+    .avatar img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #ddd;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+    .profile-card h2 {
+      margin: 5px 0;
+      font-size: 1.2rem;
+      color: #333;
+    }
+    .profile-card p {
+      color: #777;
+      margin: 0 0 15px;
+      font-size: 0.9rem;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 15px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .stats div {
+      text-align: center;
+      flex: 1;
+      min-width: 80px;
+    }
+    .stats div strong {
+      display: block;
+      font-size: 1rem;
+      color: #0066cc;
+    }
+    .section {
+      background: white;
+      margin: 10px auto;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .section h3 {
+      margin-top: 0;
+      font-size: 1rem;
+      color: #444;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 8px;
+    }
+    .section a {
+      display: block;
+      color: #0066cc;
+      text-decoration: none;
+      padding: 8px 0;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.4rem;
+      }
+      .profile-card {
+        padding: 15px;
+      }
+      .avatar img {
+        width: 70px;
+        height: 70px;
+      }
+      .profile-card h2 {
+        font-size: 1rem;
+      }
+      .profile-card p {
+        font-size: 0.8rem;
+      }
+      .stats div strong {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .stats {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>My Profile</h1>
+  </header>
+   
+  <div class="profile-card">
+    <div class="avatar"><img id="pp" src="../images/profile.jpg" alt="Profile Picture"></div>
+    <h2>Jane Doe</h2>
+    <p>Real Estate Agent</p>
+    <div class="stats">
+      <div><strong>24</strong>Properties</div>
+      <div><strong>12</strong>Saved</div>
+      <div><strong>5</strong>Messages</div>
+    </div>
+  </div>
+
+  <!-- Sections -->
+  <div class="section">
+    <h3>My Listings</h3>
+    <a href="#">View All Properties</a>
+    <a href="#">Add New Property</a>
+  </div>
+
+  <div class="section">
+    <h3>Saved Properties</h3>
+    <a href="#">View Wishlist</a>
+  </div>
+
+  <div class="section">
+    <h3>Account Settings</h3>
+    <a href="#">Edit Profile</a>
+    <a href="#">Change Password</a>
+    <a href="#">Logout</a>
+  </div>
+
+</body>
+</html>

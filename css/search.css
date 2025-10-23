@@ -1,0 +1,890 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #f4f4f9;
+}
+
+/* ===== NAVBAR ===== */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #005ca8;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  z-index: 1000;
+}
+
+#logo img {
+  height: 40px;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.4rem 0.7rem;
+  width: 45%;
+  height: 42px;
+}
+
+.search-bar select {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: gray;
+  font-weight: 500;
+}
+
+.search-icon {
+  color: gray;
+  margin: 0 6px;
+}
+
+#search-input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.mic-icon {
+  color: gray;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 6px;
+}
+
+/* Post Property */
+#post {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  background-size: 300% 100%;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Profile */
+.profile-btn {
+  background: #fff;
+  color: navy;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* ===== MAIN LAYOUT ===== */
+.container {
+  display: flex;
+  margin-top: 75px;
+  height: calc(100vh - 75px);
+}
+
+/* LEFT FILTER PANEL */
+.filter-panel {
+  width: 30%;
+  background: #fff;
+  border-right: 2px solid #e0e0e0;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.filter-panel h2 {
+  color:#005ca8;
+  margin-bottom: 1rem;
+}
+
+/* Each Filter */
+.filter {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 0.8rem 0;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 600;
+  color: #222;
+}
+
+.filter-header i {
+  transition: transform 0.3s ease;
+}
+
+.filter.active .filter-header i {
+  transform: rotate(180deg);
+}
+
+/* Hidden by default */
+.filter-content {
+  display: none;
+  margin-top: 0.7rem;
+}
+
+.filter.active .filter-content {
+  display: block;
+}
+
+/* Dropdown Styles */
+select {
+  width: 100%;
+  padding: 0.4rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: gray;
+}
+
+/* Budget */
+.budget-range {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 22px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.toggle-switch input:checked + .slider {
+  background-color: #005ca8;
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* BHK Buttons */
+.bhk-options button {
+  background: #f3f3f3;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 4px 10px;
+  margin: 4px;
+  font-size: 0.85rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.bhk-options button:hover {
+  background: #e0e0e0;
+}
+
+/* RIGHT PROPERTY SECTION */
+.property-list {
+  width: 60%;
+  padding: 1.5rem;
+  overflow-y: auto;
+  background: #fafafa;
+}
+
+.property-list h2 {
+  color: #005ca8;
+}
+/* Desktop search bar width + spacing */
+@media (min-width: 1024px) {
+  .search-bar {
+    width: 60%;
+    margin: 0 2.5%; /* space left & right */
+  }
+
+  .container {
+    gap: 5%; /* 5% between left filter panel and property list */
+  }
+}
+
+/* Buttons for property type and BHK */
+.property-types button,
+.bhk-options button {
+  background: #f3f3f3;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 4px 10px;
+  margin: 4px;
+  font-size: 0.85rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.property-types button:hover,
+.bhk-options button:hover {
+  background: #e0e0e0;
+}
+
+.property-types button.active,
+.bhk-options button.active {
+  background:#005ca8;
+  color: white;
+  border-color:#005ca8;
+}
+
+/* Area Filter */
+.area-range {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.area-range input {
+  width: 100px;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.area-range select {
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+/* Desktop search bar width + spacing */
+@media (min-width: 1024px) {
+  .search-bar {
+    width: 60%;
+    margin: 0 2.5%; /* side spacing */
+    gap: 0.5rem;
+  }
+
+  .search-bar select {
+    width: auto; /* only content width */
+    padding: 0 0.5rem;
+  }
+
+  #search-input {
+    flex: 1; /* fill remaining space */
+  }
+
+  .container {
+    gap: 5%; /* space between left panel and property list */
+  }
+}
+
+/* Filter panel padding */
+.filter-panel {
+  width: 30%;
+  background: #fff;
+  border-right: 2px solid #e0e0e0;
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem; /* extra left padding */
+  margin-left: 5rem;
+  overflow-y: auto;
+}
+
+/* Buttons for property type, BHK, status, furnishing */
+.property-types button,
+.bhk-options button,
+.status-options button,
+.furnishing-options button {
+  background: #f3f3f3;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 4px 10px;
+  margin: 4px;
+  font-size: 0.85rem;
+  color: #555;
+  cursor: pointer;
+}
+
+.property-types button:hover,
+.bhk-options button:hover,
+.status-options button:hover,
+.furnishing-options button:hover {
+  background: #e0e0e0;
+}
+
+.property-types button.active,
+.bhk-options button.active,
+.status-options button.active,
+.furnishing-options button.active {
+  background: #005ca8;
+  color: white;
+  border-color: #005ca8;
+}
+
+/* Area Filter */
+.area-range {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.area-range input {
+  width: 100px;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.area-range select {
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.property-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  position: relative;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h3 {
+  font-weight: 700;
+  color: #222;
+}
+
+.card-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  color: white;
+}
+
+.badge.resale { background: #ff6b6b; }
+
+.favorite {
+  cursor: pointer;
+  font-size: 1rem;
+  color: #ffa500;
+}
+
+.property-location, .property-price {
+  color: #444;
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+}
+
+.features p {
+  font-size: 0.85rem;
+  margin: 0.2rem 0;
+  cursor: pointer;
+}
+
+.features p i {
+  margin-right: 6px;
+  color: #005ca8;
+}
+
+/* Description */
+.description .full-text { display: none; }
+
+.toggle-desc {
+  background: none;
+  border: none;
+  color: #005ca8;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+/* Buttons */
+.btn-outline {
+  background: white;
+  color: #005ca8;
+  border: 2px solid #005ca8;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.btn-filled {
+  background: #005ca8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+/* Property Card */
+.property-card {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  width: 350px; /* adjust as needed */
+}
+
+/* Left Picture - Glass Effect */
+.leftPicture {
+  position: relative;
+  height: 250px; /* adjust as needed */
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+}
+
+/* Slides inside leftPicture */
+.slide {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: left 0.5s ease-in-out;
+}
+
+.slide.active {
+  left: 0;
+}
+
+/* Top Section - Featured and Heart */
+#topSection {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  z-index: 2;
+}
+
+#feature {
+  background: #ffcc00;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.fa-heart {
+  color:blue;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Bottom Section */
+#bottomSection {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: white;
+  font-weight: 500;
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+}
+
+/* Arrows */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  z-index: 2;
+  background: rgba(0,0,0,0.3);
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.arrow.left {
+  left: 10px;
+}
+
+.arrow.right {
+  right: 10px;
+}
+
+/* Dots */
+.dots {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+  z-index: 2;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  cursor: pointer;
+}
+
+.dot.active {
+  background: #ffcc00;
+}
+/* Right Picture Container */
+.rightPicture {
+  width: 350px;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/* Top Heading */
+#topHeading .mainInfo #propertyName {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase; /* GODREJ HORIZON in uppercase */
+  margin-bottom: 5px;
+}
+
+#topHeading .mainInfo #saleType {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Info Where */
+.infoWhere h6 {
+  font-size: 14px;
+  color: #777;
+  margin: 10px 0;
+}
+
+/* Details Section - BHK Cards */
+.details {
+  display: flex;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.priceApart {
+  flex: 1;
+  padding: 10px;
+  border-right: 1px solid #ccc;
+  position: relative;
+  cursor: pointer;
+}
+
+.priceApart:last-child {
+  border-right: none;
+}
+
+/* Add arrow for expandable options */
+.priceApart::after {
+  content: "\f0da"; /* FontAwesome arrow-right */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #555;
+}
+
+/* Nearby Section */
+.location {
+  margin: 10px 0;
+  background: #f5f5f5;
+  padding: 8px 10px;
+  border-radius: 8px;
+  max-height: 40px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+/* Show +3 when content overflows */
+.location::after {
+  content: "+3";
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  background: #ddd;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+/* Expand nearby on hover */
+.location:hover {
+  max-height: 200px;
+  overflow: auto;
+}
+
+/* Description Section */
+.description {
+  margin: 10px 0;
+  max-height: 60px;
+  overflow: hidden;
+  position: relative;
+  transition: max-height 0.3s ease;
+}
+
+.description.expanded {
+  max-height: 500px; /* expanded height */
+}
+
+/* Read more toggle arrow */
+.description::after {
+  content: "\f078"; /* FontAwesome down arrow */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  cursor: pointer;
+  color: #555;
+}
+
+/* Bottom Section */
+.botton.section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+/* Builder */
+.builder {
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Brochure Button */
+.brochure button {
+  border: 1px solid #007bff;
+  color: #007bff;
+  background: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.brochure button i {
+  margin-right: 5px;
+}
+
+/* View Number Button */
+.contact {
+  background: #007bff;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.property-card {
+  display: flex;               /* horizontal layout */
+  flex-direction: row;         /* left/right */
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  background: #fff;
+  width: 720px;                /* adjust as needed */
+  margin-bottom: 20px;
+}
+
+/* Left Picture */
+.leftPicture {
+  flex: 1;                     /* left side takes half width */
+  min-width: 300px;            /* ensure enough width */
+  position: relative;
+  height: 250px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+}
+
+/* Right Details */
+.rightPicture {
+  flex: 1;                     /* right side takes half width */
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Make BHK cards horizontal inside rightPicture */
+.details {
+  display: flex;
+  flex-wrap: nowrap;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  margin: 10px 0;
+}
+
+.priceApart {
+  flex: 1;
+  padding: 10px;
+  border-right: 1px solid #ccc;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.priceApart:last-child {
+  border-right: none;
+}
+
+.priceApart::after {
+  content: "\f0da"; /* FontAwesome arrow-right */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #555;
+}
+
+/* Nearby Section */
+.location {
+  margin: 10px 0;
+  background: #f5f5f5;
+  padding: 8px 10px;
+  border-radius: 8px;
+  max-height: 40px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.location::after {
+  content: "+3";
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  background: #ddd;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.location:hover {
+  max-height: 200px;
+  overflow: auto;
+}
+
+/* Description */
+.description {
+  margin: 10px 0;
+  max-height: 60px;
+  overflow: hidden;
+  position: relative;
+  transition: max-height 0.3s ease;
+}
+
+.description.expanded {
+  max-height: 500px;
+}
+
+.description::after {
+  content: "\f078"; /* FontAwesome down arrow */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  cursor: pointer;
+  color: #555;
+}
+
+/* Bottom Buttons */
+.botton.section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.builder {
+  font-size: 14px;
+  text-align: center;
+}
+
+.brochure button {
+  border: 1px solid #007bff;
+  color: #007bff;
+  background: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.brochure button i {
+  margin-right: 5px;
+}
+
+.contact {
+  background: #007bff;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}

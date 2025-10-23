@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PropertyHub - Find Your Dream Home</title>
+    <link rel="stylesheet" href__="styles.css">
+    <link rel="stylesheet" href__="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="nav-brand">
+                <div class="logo">P</div>
+                <span class="brand-name">PropertyHub</span>
+            </div>
+            
+            <div class="search-container">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Search properties, localities, landmarks..." class="search-input">
+                <button onclick="handleSearch()" class="search-btn">Search</button>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="btn-outline" onclick="showFavorites()">
+                    <i class="far fa-heart"></i>
+                    <span>Saved (<span id="favoriteCount">0</span>)</span>
+                </button>
+                <button class="btn-primary" onclick="postProperty()">
+                    <i class="fas fa-plus"></i>
+                    <span>Post Property</span>
+                </button>
+                <button class="btn-icon">
+                    <i class="far fa-user"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Static Sidebar -->
+        <aside class="sidebar">
+            <div class="filter-header">
+                <button onclick="resetFilters()" class="btn-reset">Clear All Filters</button>
+            </div>
+
+            <!-- Budget Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleSection('budget')">
+                    Budget
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="budget" class="filter-content active">
+                    <div class="price-inputs">
+                        <input type="number" id="minPrice" placeholder="Min" value="0">
+                        <input type="number" id="maxPrice" placeholder="Max" value="10000">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Property Type Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleSection('propertyType')">
+                    Type of Property
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="propertyType" class="filter-content active">
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="propertyType" value="Apartment">
+                        <span>Apartment</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="propertyType" value="Villa">
+                        <span>Villa</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="propertyType" value="House">
+                        <span>House</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="propertyType" value="Studio">
+                        <span>Studio</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="propertyType" value="Penthouse">
+                        <span>Penthouse</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Bedrooms Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleSection('bedrooms')">
+                    No. of Bedrooms
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="bedrooms" class="filter-content active">
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="bedrooms" value="1">
+                        <span>1+ BHK</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="bedrooms" value="2">
+                        <span>2+ BHK</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="bedrooms" value="3">
+                        <span>3+ BHK</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="bedrooms" value="4">
+                        <span>4+ BHK</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="bedrooms" value="5">
+                        <span>5+ BHK</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Construction Status Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleSection('construction')">
+                    Construction Status
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="construction" class="filter-content">
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="construction" value="Under Construction">
+                        <span>Under Construction</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="construction" value="Ready to Move">
+                        <span>Ready to Move</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="construction" value="New Launch">
+                        <span>New Launch</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Posted By Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleSection('postedBy')">
+                    Posted by
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="postedBy" class="filter-content">
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="postedBy" value="Owner">
+                        <span>Owner</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="postedBy" value="Dealer">
+                        <span>Dealer</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="postedBy" value="Builder">
+                        <span>Builder</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Localities Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleSection('localities')">
+                    Localities
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="localities" class="filter-content">
+                    <div class="scrollable-content">
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="Miami">
+                            <span>Miami</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="New York">
+                            <span>New York</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="Austin">
+                            <span>Austin</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="Los Angeles">
+                            <span>Los Angeles</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="Chicago">
+                            <span>Chicago</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="Denver">
+                            <span>Denver</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="Seattle">
+                            <span>Seattle</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="San Francisco">
+                            <span>San Francisco</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="Phoenix">
+                            <span>Phoenix</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="Boston">
+                            <span>Boston</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="Portland">
+                            <span>Portland</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="Nashville">
+                            <span>Nashville</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="Ann Arbor">
+                            <span>Ann Arbor</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="Atlanta">
+                            <span>Atlanta</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="city" value="Dallas">
+                            <span>Dallas</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Furnishing Status Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleSection('furnishing')">
+                    Furnishing Status
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="furnishing" class="filter-content">
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="furnishing" value="Furnished">
+                        <span>Furnished</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="furnishing" value="Semi-Furnished">
+                        <span>Semi-Furnished</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="filter-checkbox" data-filter="furnishing" value="Unfurnished">
+                        <span>Unfurnished</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Amenities Filter -->
+            <div class="filter-section">
+                <div class="filter-title" onclick="toggleSection('amenities')">
+                    Amenities
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="amenities" class="filter-content">
+                    <div class="scrollable-content">
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="amenities" value="Pool">
+                            <span>Pool</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="amenities" value="Gym">
+                            <span>Gym</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="amenities" value="Parking">
+                            <span>Parking</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="amenities" value="Garden">
+                            <span>Garden</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="amenities" value="Security">
+                            <span>Security</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" class="filter-checkbox" data-filter="amenities" value="Elevator">
+                            <span>Elevator</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Quick Filters Bar -->
+            <div class="quick-filters-bar">
+                <div class="results-info">
+                    <span id="resultsCount">0</span> results
+                </div>
+                <div class="quick-filters">
+                    <button class="quick-filter-btn" data-quick="newLaunch">
+                        <i class="fas fa-sparkles"></i> New Launch
+                    </button>
+                    <button class="quick-filter-btn" data-quick="owner">
+                        <i class="fas fa-user"></i> Owner
+                    </button>
+                    <button class="quick-filter-btn" data-quick="underConstruction">
+                        <i class="fas fa-hard-hat"></i> Under Construction
+                    </button>
+                    <button class="quick-filter-btn" data-quick="readyToMove">
+                        <i class="fas fa-home"></i> Ready to Move
+                    </button>
+                </div>
+                <div class="sort-container">
+                    <span>Sort by:</span>
+                    <select id="sortSelect" onchange="applyFilters()">
+                        <option value="newest">Newest First</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="bedrooms">Most Bedrooms</option>
+                        <option value="area">Largest Area</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Properties Grid -->
+            <div id="propertiesGrid" class="properties-grid">
+                <!-- Properties will be rendered here by JavaScript -->
+            </div>
+
+            <!-- No Results -->
+            <div id="noResults" class="no-results" style="display: none;">
+                <div class="no-results-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>No Properties Found</h3>
+                <p>Try adjusting your filters to see more results</p>
+                <button onclick="resetFilters()" class="btn-primary">Reset Filters</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

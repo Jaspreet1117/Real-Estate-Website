@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Filters</title>
+  <link rel="stylesheet" href="../css/search2.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav>
+    <div id="logo">
+      <img src="../images/WhatsApp_Image_2025-09-08_at_14.32.09_af6a30c5-removebg-preview.png" alt="Logo">
+    </div>
+
+    <div class="search-bar">
+      <select id="property-options">
+        <option selected>Buy</option>
+        <option>Rent</option>
+        <option>PG</option>
+        <option>Projects</option>
+        <option>Buy (Commercial)</option>
+        <option>Lease</option>
+        <option>Projects (Commercial)</option>
+      </select>
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" id="search-input" placeholder="Search properties in Delhi">
+      <i class="fa-solid fa-microphone mic-icon"></i>
+    </div>
+
+    <button id="post">Post Property</button>
+
+    <button class="profile-btn"><i class="fa-solid fa-user"></i></button>
+  </nav>
+
+  <!-- ===== MAIN SECTION ===== -->
+  <main class="container">
+    <!-- LEFT FILTER PANEL -->
+    <aside class="filter-panel">
+      <h2>Filters</h2>
+
+      <!-- Verified Properties -->
+      <div class="filter">
+        <div class="filter-header">
+          <span>Verified Properties</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="filter-content">
+          <label class="toggle-switch">
+            <input type="checkbox">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Budget -->
+      <div class="filter">
+        <div class="filter-header">
+          <span>Budget</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="filter-content">
+          <div class="budget-range">
+            <select>
+              <option>No Min</option>
+              <option>₹5 Lakh</option>
+              <option>₹10 Lakh</option>
+              <option>₹25 Lakh</option>
+              <option>₹50 Lakh</option>
+              <option>₹1 Crore</option>
+              <option>₹10 Crores</option>
+              <option>₹50 Crores</option>
+              <option>₹100+ Crores</option>
+            </select>
+            <select>
+              <option>No Max</option>
+              <option>₹5 Lakh</option>
+              <option>₹10 Lakh</option>
+              <option>₹25 Lakh</option>
+              <option>₹50 Lakh</option>
+              <option>₹1 Crore</option>
+              <option>₹10 Crores</option>
+              <option>₹50 Crores</option>
+              <option>₹100+ Crores</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Type of Property -->
+      <div class="filter">
+        <div class="filter-header">
+          <span>Type of Property</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="filter-content property-types">
+          <button>Residential Apartment</button>
+          <button>Independent Builder Floor</button>
+          <button>Residential Land</button>
+          <button>Independent House</button>
+          <button>1RK Studio Apartment</button>
+          <button>Farm House</button>
+        </div>
+      </div>
+
+      <!-- Number of Bedrooms -->
+      <div class="filter">
+        <div class="filter-header">
+          <span>No. of Bedrooms</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="filter-content bhk-options">
+          <button>1 BHK</button>
+          <button>2 BHK</button>
+          <button>3 BHK</button>
+          <button>4 BHK</button>
+          <button>5 BHK</button>
+          <button>6 BHK</button>
+          <button>7 BHK</button>
+          <button>8 BHK</button>
+          <button>9+ BHK</button>
+        </div>
+      </div>
+
+      <!-- Area Filter -->
+      <div class="filter">
+        <div class="filter-header">
+          <span>Area</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="filter-content area-filter">
+          <div class="area-range">
+            <input type="number" placeholder="No Min">
+            <input type="number" placeholder="No Max">
+            <select>
+              <option>sq ft</option>
+              <option>sq m</option>
+              <option>hectares</option>
+              <option>bigha</option>
+              <option>yards</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Construction Status -->
+      <div class="filter">
+        <div class="filter-header">
+          <span>Construction Status</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="filter-content status-options">
+          <button>Newly Launched</button>
+          <button>Under Construction</button>
+          <button>Ready to Move</button>
+        </div>
+      </div>
+
+      <!-- Furnishing -->
+      <div class="filter">
+        <div class="filter-header">
+          <span>Furnishing</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="filter-content furnishing-options">
+          <button>Unfurnished</button>
+          <button>Semi-Furnished</button>
+          <button>Fully Furnished</button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- RIGHT PROPERTY LIST -->
+    <section class="property-list">
+    
+<div class="property-card">
+  <div class="leftPicture">
+    <!-- Top Section -->
+    <div id="topSection">
+      <button id="feature">Featured</button>
+      <i class="fa-regular fa-heart"></i>
+    </div>
+
+    <!-- Slides -->
+    <div class="slide active" style="background-image: url('images/image1.jpg')"></div>
+    <div class="slide" style="background-image: url('images/image2.jpg')"></div>
+    <div class="slide" style="background-image: url('images/image3.jpg')"></div>
+    <div class="slide" style="background-image: url('images/image4.jpg')"></div>
+
+    <!-- Navigation Arrows -->
+    <i class="fa-solid fa-chevron-left arrow left"></i>
+    <i class="fa-solid fa-chevron-right arrow right"></i>
+
+    <!-- Dots -->
+    <div class="dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <!-- Bottom Section -->
+    <div id="bottomSection">Under Construction · Completion from May, 2028 onwards</div>
+  </div>
+<div class="rightPicture">  
+    <div id ="topHeading">
+      <div class="mainInfo">
+        <div id ="propertyName">Godrej Horizon</div>
+      <div id ="saleType">New Booking</div>
+      </div>
+      <div class="infoWhere">
+        <h6><b>2,3,4BHK Apartment</b> in Wadala,Mumbai</h6>
+      </div>
+      <div class="details">
+        <div class="priceApart">
+          <div id="apartment">2 BHK Apartment</div>
+          <div id ="price"><b>₹3.94-4.43 Cr</b></div>
+        </div>
+        <div class="priceApart">
+          <div id="apartment">3 BHK Apartment</div>
+          <div id ="price"><b>₹5.84-7.78 Cr</b></div>
+        </div>
+        <div class="priceApart">
+          <div id="apartment">4 BHK Apartment</div>
+          <div id ="price"><b>Price on Request</b></div>
+        </div>
+      </div>
+      <div class="location"><b>Nearby:</b>Auxilium Convent High School
+Veermata Jijabai Technological Institute
+Eastern Express Highway</div>
+      <div class="description">Spacious 2,3,4 BHK apartments in Wadala are available for sale.Check out latest property options at Godrej Horizon housing society. This society is RERA approved and P51900034851 is the RERA number.</div>
+      <div class="botton section">
+        <div class="builder">Builder<br>
+        Godrej Properties</div>
+        <div class ="brochure"><button id="bro1"><i class="fa-utility fa-semibold fa-arrow-down-to-line"></i>Brochure</button></div>
+        <div class ="contact"><button id="veiw">View Number</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="property-card">
+  <div class="leftPicture">
+    <!-- Top Section -->
+    <div id="topSection">
+      <button id="feature">Featured</button>
+      <i class="fa-regular fa-heart"></i>
+    </div>
+
+    <!-- Slides -->
+    <div class="slide active" style="background-image: url('../images/im1.jpeg')"></div>
+    <div class="slide" style="background-image: url('../images/im4.jpeg')"></div>
+    <div class="slide" style="background-image: url('../images/ima2.jpeg')"></div>
+    <div class="slide" style="background-image: url('../images/Ist.jpg')"></div>
+
+    <!-- Navigation Arrows -->
+    <i class="fa-solid fa-chevron-left arrow left"></i>
+    <i class="fa-solid fa-chevron-right arrow right"></i>
+
+    <!-- Dots -->
+    <div class="dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <!-- Bottom Section -->
+    <div id="bottomSection">Under Construction · Completion from May, 2028 onwards</div>
+  </div>
+<div class="rightPicture">  
+    <div id ="topHeading">
+      <div class="mainInfo">
+        <div id ="propertyName">L&T Island Cove</div>
+      <div id ="saleType">No More available</div>
+      </div>
+      <div class="infoWhere">
+        <h6><b>2BHK Apartment</b> in Wadala,Chandigarh</h6>
+      </div>
+      <div class="details">
+        <div class="priceApart">
+          <div id="apartment">2,4 BHK Apartment</div>
+          <div id ="price"><b>₹5.94-6.43 Cr</b></div>
+        </div>
+        <!-- <div class="priceApart">
+          <div id="apartment">3 BHK Apartment</div>
+          <div id ="price"><b>₹5.84-7.78 Cr</b></div>
+        </div> -->
+        <div class="priceApart">
+          <div id="apartment">4 BHK Apartment</div>
+          <div id ="price"><b>Price on Request</b></div>
+        </div>
+      </div>
+      <div class="location"><b>Nearby:</b>Chitkara High School
+Gopals Sweet</div>
+      <div class="description">4 BHK apartments in Wadala are available for sale.Check out latest property options at Godrej Horizon housing society. This society is RERA approved and P51900034851 is the RERA number.</div>
+      <div class="botton section">
+        <div class="builder">Builder<br>
+        Godrej Properties</div>
+        <div class ="brochure"><button id="bro1"><i class="fa-utility fa-semibold fa-arrow-down-to-line"></i>Brochure</button></div>
+        <div class ="contact"><button id="veiw">View Number</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="property-card">
+  <div class="leftPicture">
+    <!-- Top Section -->
+    <div id="topSection">
+      <!-- <button id="feature">Featured</button> -->
+      <i class="fa-regular fa-heart"></i>
+    </div>
+
+    <!-- Slides -->
+    <div class="slide active" style="background-image: url('../images/Mumbai1.jpg')"></div>
+    <div class="slide" style="background-image: url('../images/Mumbai2.jpg')"></div>
+    <div class="slide" style="background-image: url('../images/Mumbai3.jpg')"></div>
+    <div class="slide" style="background-image: url('../images/Mumbai4.jpg')"></div>
+
+    <!-- Navigation Arrows -->
+    <i class="fa-solid fa-chevron-left arrow left"></i>
+    <i class="fa-solid fa-chevron-right arrow right"></i>
+
+    <!-- Dots -->
+    <div class="dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <!-- Bottom Section -->
+    <div id="bottomSection">Liked by 3 people, Yesterday</div>
+  </div>
+<div class="rightPicture">  
+    <div id ="topHeading">
+      <div class="mainInfo">
+        <div id ="propertyName">Ruparel Vivanza</div>
+      <!-- <div id ="saleType">New Booking</div> -->
+      </div>
+      <div class="infoWhere">
+        <h6><b>3, 4, 5 BHK Apartment </b>in Prabhadevi, Pune</h6>
+      </div>
+      <div class="details">
+        <div class="priceApart">
+          <div id="apartment">2 BHK Apartment</div>
+          <div id ="price"><b>₹3.94-4.43 Cr</b></div>
+        </div>
+        <!-- <div class="priceApart">
+          <div id="apartment">3 BHK Apartment</div>
+          <div id ="price"><b>₹5.84-7.78 Cr</b></div>
+        </div>
+        <div class="priceApart">
+          <div id="apartment">4 BHK Apartment</div>
+          <div id ="price"><b>Price on Request</b></div>
+        </div> -->
+      </div>
+      <div class="location"><b>Nearby:</b>Auxilium Convent High School
+
+Eastern Express Highway</div>
+      <div class="description">Spacious 2,3,4 BHK apartments in Wadala are available for sale.Check out latest property options at Godrej Horizon housing society. This society is RERA approved and P51900034851 is the RERA number.</div>
+      <div class="botton section">
+        <div class="builder">Builder<br>
+        Your HOMEZONE Properties</div>
+        <div class ="brochure"><button id="bro1"><i class="fa-utility fa-semibold fa-arrow-down-to-line"></i>Brochure</button></div>
+        <div class ="contact"><button id="veiw">View Number</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="property-card">
+  <div class="leftPicture">
+    <!-- Top Section -->
+    <div id="topSection">
+      <button id="feature">Featured</button>
+      <i class="fa-regular fa-heart"></i>
+    </div>
+
+    <!-- Slides -->
+    <div class="slide active" style="background-image: url('../images/2nd.jpg')"></div>
+    <div class="slide" style="background-image: url('../images/3rd.jpg')"></div>
+    <div class="slide" style="background-image: url('../images/delhi.jpg')"></div>
+    <div class="slide" style="background-image: url('../images/ima3.jpeg')"></div>
+
+    <!-- Navigation Arrows -->
+    <i class="fa-solid fa-chevron-left arrow left"></i>
+    <i class="fa-solid fa-chevron-right arrow right"></i>
+
+    <!-- Dots -->
+    <div class="dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <!-- Bottom Section -->
+    <!-- <div id="bottomSection">Ready To Shif</div> -->
+  </div>
+<div class="rightPicture">  
+    <div id ="topHeading">
+      <div class="mainInfo">
+        <div id ="propertyName">Eldora - Hiranandani Gardens</div>
+      <div id ="saleType">Resale</div>
+      </div>
+      <div class="infoWhere">
+        <h6><b>3BHK Flat</b> in Powai,Mumbai</h6>
+      </div>
+      <div class="details">
+        <div class="priceApart">
+          <div id="apartment">51 Lac</div>
+          <div id ="price"><b>₹9,272/sqft</b></div>
+        </div>
+        <div class="priceApart">
+          <div id="apartment">550 sqft</div>
+          <div id ="price"><b>Built-up Area</b></div>
+        </div>
+        <div class="priceApart">
+          <div id="apartment">1 BHK Apartment</div>
+          <div id ="price"><b>Ready to move</b></div>
+        </div>
+      </div>
+      <div class="location"><b>Nearby:</b>Auxilium Convent High School
+Eastern Express Highway</div>
+      <div class="description">Spacious 2,3,4 BHK apartments in Wadala are available for sale.Check out latest property options at Godrej Horizon housing society. This society is RERA approved and P51900034851 is the RERA number.</div>
+      <div class="botton section">
+        <div class="builder">Builder<br>
+        Owner</div>
+        <div class ="brochure"><button id="bro1"><i class="fa-utility fa-semibold fa-arrow-down-to-line"></i>Brochure</button></div>
+        <div class ="contact"><button id="veiw">View Number</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="property-card">
+  <div class="leftPicture">
+    <!-- Top Section -->
+    <div id="topSection">
+      <button id="feature">Featured</button>
+      <i class="fa-regular fa-heart"></i>
+    </div>
+
+    <!-- Slides -->
+    <div class="slide active" style="background-image: url('../images/ima2.jpeg')"></div>
+    <div class="slide" style="background-image: url('../images/image3.jpeg')"></div>
+    <div class="slide" style="background-image: url('../images/landingPicture.jpg')"></div>
+    <div class="slide" style="background-image: url('../images/Ist.jpg')"></div>
+
+    <!-- Navigation Arrows -->
+    <i class="fa-solid fa-chevron-left arrow left"></i>
+    <i class="fa-solid fa-chevron-right arrow right"></i>
+
+    <!-- Dots -->
+    <div class="dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <!-- Bottom Section -->
+    <div id="bottomSection">Ready to sale </div>
+  </div>
+<div class="rightPicture">  
+    <div id ="topHeading">
+      <div class="mainInfo">
+        <div id ="propertyName">Mahindra Marina 64</div>
+      <div id ="saleType">New Booking</div>
+      </div>
+      <div class="infoWhere">
+        <h6><b>2,3,4BHK Apartment</b> in South Delhi</h6>
+      </div>
+      <div class="details">
+        <div class="priceApart">
+          <div id="apartment">2 BHK Apartment</div>
+          <div id ="price"><b>₹3.4-5.6 Cr</b></div>
+        </div>
+        <div class="priceApart">
+          <div id="apartment">3 BHK Apartment</div>
+          <div id ="price"><b>₹7.5-8.1 Cr</b></div>
+        </div>
+        <!-- <div class="priceApart">
+          <div id="apartment">4 BHK Apartment</div>
+          <div id ="price"><b>Price on Request</b></div>
+        </div> -->
+      </div>
+      <div class="location"><b>Nearby:</b>Auxilium Convent High School
+</div>
+      <div class="description">Spacious 2,3 BHK apartments in Wadala are available for sale.Check out latest property options at Godrej Horizon housing society. This society is RERA approved and P51900034851 is the RERA number.</div>
+      <div class="botton section">
+        <div class="builder">Builder<br>
+        Mahindra Lifespaces</div>
+        <div class ="brochure"><button id="bro1"><i class="fa-utility fa-semibold fa-arrow-down-to-line"></i>Brochure</button></div>
+        <div class ="contact"><button id="veiw">View Number</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+    </section>
+  </main>
+
+  <!-- ===== JS ===== -->
+  <script>
+  const images = [
+  '../images/Mumbai1.jpg',
+  '../images/Mumbai2.jpg',
+  '../images/Mumbai3.jpg',
+  '../images/Mumbai4.jpg'
+];
+
+let index = 0;
+const leftPicture = document.getElementsByClassName('leftPicture')[0]; // get first element
+
+// If you have dots and arrows
+const dots = document.querySelectorAll('.dot');
+const prev = document.querySelector('.arrow.left');
+const next = document.querySelector('.arrow.right');
+
+function showSlide(i) {
+  // Set background image
+  leftPicture.style.backgroundImage = `url('${images[i]}')`;
+  
+  // Update dots
+  if(dots.length > 0){
+    dots.forEach((dot, idx) => dot.classList.toggle('active', idx === i));
+  }
+  
+  index = i; // update current index
+}
+
+function nextSlide() {
+  let nextIndex = (index + 1) % images.length;
+  showSlide(nextIndex);
+}
+
+function prevSlide() {
+  let prevIndex = (index - 1 + images.length) % images.length;
+  showSlide(prevIndex);
+}
+
+// Initial display
+showSlide(index);
+
+// Automatic slideshow every 1 second
+setInterval(nextSlide, 3000);
+
+// Arrow click events
+if(next) next.addEventListener('click', nextSlide);
+if(prev) prev.addEventListener('click', prevSlide);
+
+// Dot click events
+dots.forEach((dot, i) => {
+  dot.addEventListener('click', () => showSlide(i));
+});
+
+    const cities = ["Delhi", "Mumbai", "Noida", "Bangalore", "Pune", "Hyderabad", "Patna", "Chennai"];
+    const searchInput = document.getElementById("search-input");
+    let cityIndex = 0, charIndex = 0, typing = true;
+
+    function typeCity() {
+      const city = cities[cityIndex];
+      if (typing) {
+        searchInput.placeholder = "Search properties in " + city.slice(0, charIndex) + "|";
+        charIndex++;
+        if (charIndex > city.length) {
+          typing = false;
+          setTimeout(typeCity, 1000);
+        } else {
+          setTimeout(typeCity, 100);
+        }
+      } else {
+        searchInput.placeholder = "Search properties in " + city.slice(0, charIndex) + "|";
+        charIndex--;
+        if (charIndex === 0) {
+          typing = true;
+          cityIndex = (cityIndex + 1) % cities.length;
+          setTimeout(typeCity, 400);
+        } else {
+          setTimeout(typeCity, 50);
+        }
+      }
+    }
+    typeCity();
+    // Toggle description Read More / Read Less
+const description = document.querySelector('.description');
+
+description.addEventListener('click', () => {
+  description.classList.toggle('expanded');
+  
+  // Change arrow direction
+  if(description.classList.contains('expanded')){
+    description.style.maxHeight = "500px";
+  } else {
+    description.style.maxHeight = "60px";
+  }
+});
+
+    // Dropdown toggle for filters
+    document.querySelectorAll(".filter-header").forEach(header => {
+      header.addEventListener("click", () => {
+        const parent = header.parentElement;
+        parent.classList.toggle("active");
+      });
+    });
+
+    // Toggle active class for buttons
+    document.querySelectorAll(
+      ".bhk-options button, .property-types button, .status-options button, .furnishing-options button"
+    ).forEach(btn => {
+      btn.addEventListener("click", () => {
+        btn.classList.toggle("active");
+      });
+    });
+
+    document.querySelectorAll(".toggle-desc").forEach(btn => {
+    btn.addEventListener("click", () => {
+    const desc = btn.parentElement;
+    const shortText = desc.querySelector(".short-text");
+    const fullText = desc.querySelector(".full-text");
+    const icon = btn.querySelector("i");
+
+    if(fullText.style.display === "block"){
+      fullText.style.display = "none";
+      shortText.style.display = "block";
+      icon.classList.replace("fa-chevron-up","fa-chevron-down");
+      btn.innerHTML = "Read More <i class='fa-solid fa-chevron-down'></i>";
+    } else {
+      fullText.style.display = "block";
+      shortText.style.display = "none";
+      icon.classList.replace("fa-chevron-down","fa-chevron-up");
+      btn.innerHTML = "Read Less <i class='fa-solid fa-chevron-up'></i>";
+    }
+  });
+});
+// Corrected JavaScript to initialize ALL sliders independently
+
+document.querySelectorAll('.property-card').forEach(card => {
+    // 1. Get elements specific to this card
+    const leftPicture = card.querySelector('.leftPicture');
+    const slides = card.querySelectorAll('.slide');
+    const dots = card.querySelectorAll('.dot');
+    const prev = card.querySelector('.arrow.left');
+    const next = card.querySelector('.arrow.right');
+    
+    // 2. Initialize the state for this specific card
+    let currentSlide = 0;
+
+    // 3. Function to display the correct slide
+    function showSlide(n) {
+        // Wrap the index
+        if (n >= slides.length) {
+            currentSlide = 0;
+        } else if (n < 0) {
+            currentSlide = slides.length - 1;
+        } else {
+            currentSlide = n;
+        }
+
+        // Hide all slides and remove 'active' from all dots
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        // Show the current slide and activate the dot
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+    }
+
+    // 4. Navigation functions
+    function nextSlide() {
+        showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+        showSlide(currentSlide - 1);
+    }
+    
+    // 5. Set up event listeners for this card
+    if (next) next.addEventListener('click', nextSlide);
+    if (prev) prev.addEventListener('click', prevSlide);
+
+    // Set up dot listeners for this card
+    dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => showSlide(i));
+    });
+
+    // 6. Automatic slideshow for this card
+    if (slides.length > 1) { // Only run interval if there's more than one image
+        setInterval(nextSlide, 3000); 
+    }
+
+    // 7. Initial display
+    showSlide(currentSlide);
+});
+// ===== FILTER & SEARCH FUNCTIONALITY =====
+(function() {
+  // Avoid conflicts with existing variables
+  const searchInputEl = document.getElementById("search-input");
+  const allPropertyCards = document.querySelectorAll('.property-card');
+
+  // Function to get currently active filters
+  function getActiveFilters() {
+    return {
+      bhk: Array.from(document.querySelectorAll('.bhk-options button.active')).map(b => b.textContent.trim()),
+      type: Array.from(document.querySelectorAll('.property-types button.active')).map(t => t.textContent.trim()),
+      status: Array.from(document.querySelectorAll('.status-options button.active')).map(s => s.textContent.trim()),
+      furnishing: Array.from(document.querySelectorAll('.furnishing-options button.active')).map(f => f.textContent.trim()),
+      verified: document.querySelector('.filter-panel .filter.active input[type="checkbox"]')?.checked || false
+    };
+  }
+
+  // Function to filter all property cards
+  function filterPropertyCards() {
+    const searchTerm = searchInputEl.value.toLowerCase();
+    const filters = getActiveFilters();
+
+    allPropertyCards.forEach(card => {
+      const propertyName = card.querySelector('#propertyName').textContent.toLowerCase();
+      const bhkText = card.querySelector('.details')?.textContent.toLowerCase() || '';
+      const statusText = card.querySelector('#bottomSection')?.textContent.toLowerCase() || '';
+      const typeText = Array.from(card.querySelectorAll('.property-types button')).map(b => b.textContent.toLowerCase()).join(' ');
+      const furnishingText = Array.from(card.querySelectorAll('.furnishing-options button')).map(f => f.textContent.toLowerCase()).join(' ');
+      const isVerified = card.querySelector('.toggle-switch input')?.checked || false;
+
+      const matchesSearch = searchTerm === "" || propertyName.includes(searchTerm);
+      const matchesBHK = filters.bhk.length === 0 || filters.bhk.some(b => bhkText.includes(b.toLowerCase()));
+      const matchesType = filters.type.length === 0 || filters.type.some(t => typeText.includes(t.toLowerCase()));
+      const matchesStatus = filters.status.length === 0 || filters.status.some(s => statusText.includes(s.toLowerCase()));
+      const matchesFurnishing = filters.furnishing.length === 0 || filters.furnishing.some(f => furnishingText.includes(f.toLowerCase()));
+      const matchesVerified = !filters.verified || isVerified;
+
+      if (matchesSearch && matchesBHK && matchesType && matchesStatus && matchesFurnishing && matchesVerified) {
+        card.style.display = "flex";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+
+  // ===== EVENT LISTENERS =====
+  // Search input
+  searchInputEl.addEventListener('input', filterPropertyCards);
+
+  // Filter buttons & verified checkbox
+  const filterElements = document.querySelectorAll(
+    ".bhk-options button, .property-types button, .status-options button, .furnishing-options button, .toggle-switch input"
+  );
+  filterElements.forEach(el => el.addEventListener('click', filterPropertyCards));
+})();
+// ===== SEARCH BY CITY & FILTER FUNCTIONALITY =====
+(function() {
+  const searchInputEl = document.getElementById("search-input");
+  const allPropertyCards = document.querySelectorAll('.property-card');
+
+  // Function to get currently active filters
+  function getActiveFilters() {
+    return {
+      bhk: Array.from(document.querySelectorAll('.bhk-options button.active')).map(b => b.textContent.trim()),
+      type: Array.from(document.querySelectorAll('.property-types button.active')).map(t => t.textContent.trim()),
+      status: Array.from(document.querySelectorAll('.status-options button.active')).map(s => s.textContent.trim()),
+      furnishing: Array.from(document.querySelectorAll('.furnishing-options button.active')).map(f => f.textContent.trim()),
+      verified: document.querySelector('.filter-panel .filter.active input[type="checkbox"]')?.checked || false
+    };
+  }
+
+  // Function to filter all property cards
+  function filterPropertyCards() {
+    const searchTerm = searchInputEl.value.toLowerCase();
+    const filters = getActiveFilters();
+
+    allPropertyCards.forEach(card => {
+      // Extract property info
+      const propertyName = card.querySelector('#propertyName').textContent.toLowerCase();
+      const bhkText = card.querySelector('.details')?.textContent.toLowerCase() || '';
+      const statusText = card.querySelector('#bottomSection')?.textContent.toLowerCase() || '';
+      const typeText = Array.from(card.querySelectorAll('.property-types button')).map(b => b.textContent.toLowerCase()).join(' ');
+      const furnishingText = Array.from(card.querySelectorAll('.furnishing-options button')).map(f => f.textContent.toLowerCase()).join(' ');
+      const locationText = card.querySelector('.infoWhere h6')?.textContent.toLowerCase() || '';
+      const isVerified = card.querySelector('.toggle-switch input')?.checked || false;
+
+      // SEARCH: check if search term matches property name or location
+      const matchesSearch = searchTerm === "" || propertyName.includes(searchTerm) || locationText.includes(searchTerm);
+
+      // FILTERS
+      const matchesBHK = filters.bhk.length === 0 || filters.bhk.some(b => bhkText.includes(b.toLowerCase()));
+      const matchesType = filters.type.length === 0 || filters.type.some(t => typeText.includes(t.toLowerCase()));
+      const matchesStatus = filters.status.length === 0 || filters.status.some(s => statusText.includes(s.toLowerCase()));
+      const matchesFurnishing = filters.furnishing.length === 0 || filters.furnishing.some(f => furnishingText.includes(f.toLowerCase()));
+      const matchesVerified = !filters.verified || isVerified;
+
+      // Show card only if search AND all filters match
+      if (matchesSearch && matchesBHK && matchesType && matchesStatus && matchesFurnishing && matchesVerified) {
+        card.style.display = "flex";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+
+  // ===== EVENT LISTENERS =====
+  searchInputEl.addEventListener('input', filterPropertyCards);
+
+  const filterElements = document.querySelectorAll(
+    ".bhk-options button, .property-types button, .status-options button, .furnishing-options button, .toggle-switch input"
+  );
+  filterElements.forEach(el => el.addEventListener('click', filterPropertyCards));
+})();
+// ===== VOICE SEARCH FUNCTIONALITY =====
+(function() {
+  const searchInputEl = document.getElementById("search-input");
+  const micIcon = document.querySelector('.mic-icon');
+
+  // Check for browser support
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    console.warn("Your browser does not support Speech Recognition.");
+    micIcon.style.display = "none"; // hide mic if not supported
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'en-IN'; // Indian English
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  micIcon.addEventListener('click', () => {
+    recognition.start();
+    micIcon.classList.add('listening'); // optional: CSS for active mic
+  });
+
+  recognition.addEventListener('result', (event) => {
+    const spokenText = event.results[0][0].transcript;
+    searchInputEl.value = spokenText; // set spoken text in search bar
+    searchInputEl.dispatchEvent(new Event('input')); // trigger filtering
+  });
+
+  recognition.addEventListener('end', () => {
+    micIcon.classList.remove('listening'); // stop mic animation
+  });
+})();
+// ===== LIKE BUTTON FUNCTIONALITY =====
+(function() {
+  const likeButtons = document.querySelectorAll('.fa-regular.fa-heart');
+
+  likeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Toggle heart classes: empty <-> solid
+      if (button.classList.contains('fa-regular')) {
+        button.classList.remove('fa-regular');
+        button.classList.add('fa-solid', 'liked');
+      } else {
+        button.classList.remove('fa-solid', 'liked');
+        button.classList.add('fa-regular');
+      }
+    });
+  });
+})();
+
+  </script>
+
+</body>
+</html>

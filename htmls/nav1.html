@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #005ca8;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  z-index: 1000;
+}
+
+#logo img {
+  height: 40px;
+}
+
+/* Search Bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.4rem 0.7rem;
+  width: 45%;
+  height: 42px;
+}
+
+.search-bar select {
+  border: none;
+  outline: none;
+  background: transparent;
+  color: gray;
+  font-weight: 500;
+}
+
+.search-icon {
+  color: gray;
+  margin: 0 6px;
+}
+
+#search-input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.mic-icon {
+  color: gray;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 6px;
+}
+
+/* Post Property */
+#post {
+  background-color: white;
+  color: black;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  background-size: 300% 100%;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Profile */
+.profile-btn {
+  background: #fff;
+  color: navy;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+    </style>
+</head>
+<body>
+    <nav>
+    <div id="logo">
+      <img src="../images/WhatsApp_Image_2025-09-08_at_14.32.09_af6a30c5-removebg-preview.png" alt="Logo">
+    </div>
+
+    <div class="search-bar">
+      <select id="property-options">
+        <option selected>Buy</option>
+        <option>Rent</option>
+        <option>PG</option>
+        <option>Projects</option>
+        <option>Buy (Commercial)</option>
+        <option>Lease</option>
+        <option>Projects (Commercial)</option>
+      </select>
+      <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      <input type="text" id="search-input" placeholder="Search properties in Delhi">
+      <i class="fa-solid fa-microphone mic-icon"></i>
+    </div>
+
+    <button id="post">Post Property</button>
+
+    <button class="profile-btn"><i class="fa-solid fa-user"></i></button>
+  </nav>
+    <script>
+    const cities = ["Delhi", "Mumbai", "Noida", "Bangalore", "Pune", "Hyderabad", "Patna", "Chennai"];
+    const searchInput = document.getElementById("search-input");
+    let cityIndex = 0, charIndex = 0, typing = true;
+
+    function typeCity() {
+      const city = cities[cityIndex];
+      if (typing) {
+        searchInput.placeholder = "Search properties in " + city.slice(0, charIndex) + "|";
+        charIndex++;
+        if (charIndex > city.length) {
+          typing = false;
+          setTimeout(typeCity, 1000);
+        } else {
+          setTimeout(typeCity, 100);
+        }
+      } else {
+        searchInput.placeholder = "Search properties in " + city.slice(0, charIndex) + "|";
+        charIndex--;
+        if (charIndex === 0) {
+          typing = true;
+          cityIndex = (cityIndex + 1) % cities.length;
+          setTimeout(typeCity, 400);
+        } else {
+          setTimeout(typeCity, 50);
+        }
+      }
+    }
+    typeCity();
+    </script>
+</body>
+</html>

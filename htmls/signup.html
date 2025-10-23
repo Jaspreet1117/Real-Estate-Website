@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/signUp.css">
+</head>
+<body>
+    <div class="container">
+        <video autoplay muted loop id="myVideo">
+        <source src="../images/signup.mov" type="video/mp4">
+        </video>
+
+        <div class="signUp">
+            <h1>Sign Up</h1>
+            <p>HomeFindr</p>
+            <div class="signUpForm">
+                <div class="google">
+                    <i class="fa-brands fa-google" style="color: #e50b0b;"></i>
+                    <span>Sign Up with Google</span>
+                </div>
+                <div class="or"><p>OR</p></div>
+                <div class="form">
+                    <form id="signupForm">
+                        <label for="name"></label><br>
+                        <input type="text" id="name" name="name" placeholder="Name" required><br>
+
+                        <label for="email"></label><br>
+                        <input type="email" id="email" name="email" placeholder="Email or Phone number"><br>
+
+                        <label for="pwd"></label><br>
+                        <input type="password" id="pwd" name="pwd" placeholder="Password" required><br>
+
+                        <div class="submit">
+                            <p>Already have an account ? <a id="login" href="">Login</a></p>
+                            <button type="submit">Sign Up</button>
+                            
+                        </div>
+                        <div class="rememberMe">
+                            <label for="rememberMe"></label>
+                            <input type="checkbox" id="rememberMe" name="rememberMe"> Remember Me
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/0ed85649cd.js" crossorigin="anonymous"></script>
+    <script>
+        
+        const video = document.getElementById("myVideo");
+        video.playbackRate = 0.3; 
+
+        document.getElementById("signupForm").addEventListener("submit", function(event){
+            event.preventDefault();
+
+          
+            const userData = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("pwd").value
+            };
+
+          
+            const jsonData = JSON.stringify(userData, null, 2);
+
+            console.log("User Data in JSON format:", jsonData);
+
+        });
+        
+        </script>
+</body>
+</html>

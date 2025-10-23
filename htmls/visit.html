@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunshine Destino - Premium 3BHK Flats</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../main.css">
+
+  <style>
+    :root {
+      --dark-teal: #004D40;
+      --teal: #00796B;
+      --light-teal: #80CBC4;
+      --extra-light: #E0F2F1;
+      --beige: #F5F5DC;
+      --gray: #444;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: var(--beige);
+      color: var(--gray);
+    }
+
+    /* Main Section */
+    .main {
+      display: grid;
+      grid-template-columns: 60% 40%;
+      min-height: 100vh;
+    }
+    /* Image / Video Slider */
+    .slider {
+      position: relative;
+      overflow: hidden;
+    }
+    .slides {
+      display: flex;
+      transition: transform 0.6s ease-in-out;
+    }
+    .slides img, .slides video {
+      min-width: 100%;
+      height: 100vh;
+      object-fit: cover;
+    }
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: white;
+      font-size: 2rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    /* Details Section */
+    .details {
+      background: white;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .details h1 {
+      color: var(--dark-teal);
+      margin-bottom: 0.5rem;
+    }
+    .details p {
+      margin: 0.3rem 0;
+    }
+    .price {
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: var(--teal);
+      margin: 1rem 0;
+    }
+
+    /* Quick Facts */
+    .quick-facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .fact {
+      background:rgba(173,216,230,0.4);
+      text-align: center;
+      padding: 1rem;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+    .fact:hover {
+      background: var(--light-teal);
+      color: white;
+      transform: translateY(-4px);
+    }
+    .fact i {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--dark-teal);
+    }
+
+    /* Why Choose */
+    .why-choose {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background:rgba(173,216,230,0.4);
+      border-left: 6px solid var(--dark-teal);
+      border-radius: 10px;
+    }
+    .why-choose h2 {
+      color: var(--dark-teal);
+      margin-bottom: 0.8rem;
+    }
+
+    #ff {
+      text-align: center;
+      padding: 1rem;
+      background:rgba(173,216,230,0.4);
+      color: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .main {
+        grid-template-columns: 1fr;
+      }
+      .slides img, .slides video {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#" class="logo"><img id="logo" src="../images/WhatsApp_Image_2025-09-08_at_14.32.09_af6a30c5-removebg-preview.png" alt="HOMEFINDER"></a>
+    <ul class="nav-links">
+      <li><a href="loginPage.html">Login</a></li>
+      <li><a href="signup.html">Sign up </a></li>
+      <li><a href="aboutUs.html">About Us</a></li>
+      <li><a href="contactUs.html">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="main">
+    <div class="slider">
+      <div class="slides" id="slides">
+        <img src="../images/image34.jpg" alt="Exterior">
+        <img src="../images/image36.webp" alt="Living Room">
+        <img src="../images/image35.avif" alt="Pool"> 
+      </div>
+      <button class="nav-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+      <button class="nav-btn next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+    <!-- Details Section -->
+    <div class="details">
+      <h1>Sunshine Destino - 3BHK Flats</h1>
+      <p><i class="fa-solid fa-location-dot"></i> Financial District, Delhi</p>
+      <p class="price">₹ 45 - 60 Lakhs</p>
+      <p>Super Built-up Area: 1816 - 2841 sq.ft. | Possession: Nov 2025</p>
+      <div class="quick-facts">
+        <div class="fact">
+          <i class="fa-solid fa-building"></i><p>Under Construction</p>
+        </div>
+        <div class="fact">
+          <i class="fa-solid fa-certificate"></i><p>RERA Approved</p>
+        </div>
+        <div class="fact">
+          <i class="fa-solid fa-swimming-pool"></i><p>Rooftop Pool</p>
+        </div>
+        <div class="fact">
+          <i class="fa-solid fa-leaf"></i><p>Green Spaces</p>
+        </div>
+      </div>
+      <div class="why-choose">
+        <h2>Why Choose This Project?</h2>
+        <ul>
+          <li>Rooftop Swimming Pool & Sky Restaurant</li>
+          <li>Two Premium Clubhouses</li>
+          <li>Vertical Gardens & Landscaped Lawns</li>
+          <li>Prime Location Near IT Hub</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer style="background-color: rgba(173,216,246,0.6);">
+  <div class="footer-container">
+    <div class="footer-col">
+      <h4>HomeFinder</h4>
+      <ul>
+        <li><a href="#">Mobile Apps</a></li>
+        <li><a href="#">Our Services</a></li>
+        <li><a href="#">Price Trends</a></li>
+        <li><a href="#">Post your Property</a></li>
+        <li><a href="#">Real Estate Investments</a></li>
+        <li><a href="#">Articles</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Careers with us</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Feedback</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Our Partners</h4>
+      <ul>
+        <li><a href="#">Naukri.com - Jobs</a></li>
+        <li><a href="#">Jeevansathi.com - Matrimonials</a></li>
+        <li><a href="#">Shiksha.com - Education</a></li>
+        <li><a href="#">Policybazaar.com - Insurance</a></li>
+        <li><a href="#">Proptiger</a></li>
+        <li><a href="#">Realtor.com</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <p>Toll Free: <strong>1800 41 99099</strong><br>
+         Mon-Sun (9:30 AM - 6:30 PM)<br>
+         Email: <a href="mailto:homefindrlimited@gmail.com?subject=enquiry&body=Please send me your latest real estate details"">feedback@homefindr.com</a></p>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    ©2025 HomeFinder Pvt. Ltd | Designed with 🤍
+  </div>
+</footer>
+  <!---<footer>
+    <h3>Follow Us</h3>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <p class="copyright">© 2025 The Propertist. All Rights Reserved.</p>
+  </footer>--->
+
+  <script>
+    let index = 0;
+    function moveSlide(step) {
+      const slides = document.getElementById("slides");
+      const total = slides.children.length;
+      index = (index + step + total) % total;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    }
+  </script>
+</body>
+</html>

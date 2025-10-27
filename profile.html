@@ -1,0 +1,797 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HomeFindr Search + Property Dashboard</title>
+<style>
+  /* ====== GENERAL STYLES ====== */
+  body {
+    margin: 0;
+    font-family: "Poppins", Arial, sans-serif;
+    background: #E0F2F1;
+  }
+  /* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+}
+
+  .navbar {
+    background-color: #004D40;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 10px 30px;
+  }
+  .navbar h1 {
+    font-size: 26px;
+    font-weight: bold;
+    margin: 0;
+    color: #F5F5DC;
+  }
+  .search-container {
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    flex: 1;
+    padding: 6px 12px;
+    max-width: 1100px;
+    position: relative;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  }
+  .search-container select, .search-container input {
+    border: none;
+    outline: none;
+    font-size: 15px;
+    background: transparent;
+    font-weight: 600;
+    color: #004D40;
+  }
+  .search-container input {
+    flex: 1;
+    margin-left: 10px;
+  }
+  .icon-btn {
+    background: #E0F2F1;
+    border-radius: 50%;
+    border: 1px solid #80CBC4;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  .icon-btn:hover { background: #80CBC4; }
+  .search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+  .search-btn i { font-size: 20px; color: #00796B; }
+  .suggestion-panel {
+    display: none;
+    position: absolute;
+    top: 55px;
+    left: 0;
+    width: 100%;
+    background: #F5F5DC;
+    border: 1px solid #80CBC4;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 10;
+  }
+  .filter-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; color:black; }
+  .filter {
+    border: 1px solid #80CBC4;
+    border-radius: 20px;
+    padding: 8px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #E0F2F1;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  .filter:hover { background-color: #80CBC4; border-color: #00796B; color: white; }
+  .checkboxes { display: flex; flex-wrap: wrap; gap: 15px; margin: 10px 0; }
+  .checkboxes label { font-size: 14px; color: #004D40; }
+  .actions { margin-top: 15px; }
+  .actions button { background: #00796B; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; transition: background 0.3s ease; }
+  .actions button:hover { background: #004D40; }
+  .actions button.cancel { background: #B8860B; margin-left: 10px; }
+  .actions button.cancel:hover { background: #8B6B00; }
+
+  /* ====== DASHBOARD STYLES ====== */
+  :root {
+    --deep-teal:#004D40;
+    --teal:#00796B;
+    --light-teal:#80CBC4;
+    --card-bg:#E0F2F1;
+    --gold:#B8860B;
+    --gold-2:#D4AF37;
+    --cream:#FFFDD0;
+    --white:#ffffff;
+    --shadow: 0 4px 15px rgba(0,0,0,0.12);
+  }
+  .page { display: none; width: 100%; min-height: 100vh; padding: 20px; background: var(--cream);color:black;}
+  .page.active { display: block; color:black;}
+  .main-wrapper { max-width: 900px; margin: 0 auto;color:black; }
+  .profile-card{
+    background:var(--card-bg);
+    margin:20px auto;
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:30px;color:black;
+    /* text-align:center; */
+  }
+  .profile-card h2{ color: var(--deep-teal); margin:8px 0 4px;color:black;}
+  .profile-card p{ color: var(--teal); margin:0 0 14px;color:black;}
+  .profile-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+  flex-wrap: nowrap;
+  text-align: left;
+}
+
+.profile-details {
+  flex: 1;             /* makes details take the remaining width */
+  color: black;
+}
+.profile-image {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #00796B; /* secondary teal */
+  box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+}
+.profile-image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.edit-icon-btn {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: var(--teal);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background 0.3s ease;
+}
+
+.edit-icon-btn:hover {
+  background-color: var(--deep-teal);transform: scale(1.1);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 18px;
+}
+
+.stat-item {
+  background: var(--light-teal);
+  border-radius: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  text-align: center;
+  color: var(--deep-teal);
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* For tablets (2 per row) */
+@media (max-width: 900px) {
+  .stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* For phones (1 per row) */
+@media (max-width: 480px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats {
+    justify-content: center;
+    gap: 15px;
+  }
+  .stat-item {
+    flex: 1 1 calc(45% - 10px);
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-item {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+}
+
+  .section{
+    background: var(--white);
+    margin:12px auto;
+    border-radius:12px;
+    padding:14px; 
+    box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  }
+  .section h3{ margin:0 0 10px; color:var(--deep-teal);}
+  .section a{ display:block; color:var(--teal); text-decoration:none; padding:6px 0; cursor:pointer; }
+  .section a:hover{ color:var(--deep-teal); text-decoration:underline; }
+  .properties{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+    gap:16px;
+    margin-top:20px;
+  }
+  .card{
+    background: var(--white);
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.06);
+    overflow:hidden;
+    position:relative;
+    cursor:pointer;
+    min-height: 150px;
+  }
+  .card:hover{ transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
+  .card .badge{
+    position:absolute;
+    top:10px;
+    right:10px;
+    background:var(--gold);
+    color: var(--white);
+    padding:4px 9px;
+    border-radius:8px;
+    font-size:0.82rem;
+  }
+  .card-content{ padding:12px; }
+  .card-content h3{ margin:0 0 6px; font-size:1.05rem; color:var(--deep-teal);}
+  .card-content p{ margin:4px 0; font-size:0.9rem;}
+  .card-content .rating{ color: var(--gold-2); }
+  .back-btn{
+    background:var(--gold);
+    color:white;
+    border:none;
+    border-radius:8px;
+    padding:8px 12px;
+    cursor:pointer;
+    position:fixed;
+    bottom:16px;
+    right:14px;
+    z-index:150;
+    font-weight:700;
+  }
+  .back-btn:hover{ background:var(--gold-2); }
+  .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(0,0,0,0.36);
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-content {
+    background: var(--white);
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+    padding: 15px;
+    position: relative;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+  }
+  .modal-close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 26px;
+    height: 26px;
+    font-size: 18px;
+    background: var(--gold);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+ 
+ .empty-state {
+    text-align: center;
+    padding: 20px;
+}
+
+.empty-state h2 {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #212529;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.empty-state .subtitle {
+    font-size: 1.1em;
+    color: #6c757d;
+    line-height: 1.5;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.icon-placeholder {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+}
+
+.icon-center {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 20px auto;
+}
+
+.icon-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+}
+
+.icon-img::before {
+    content: '';
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    border-radius: 4px;
+    z-index: 2;
+    background-image: linear-gradient(45deg, transparent 50%, #1E90FF 50%), linear-gradient(-45deg, transparent 50%, #1E90FF 50%), linear-gradient(#1E90FF, #1E90FF);
+    background-repeat: no-repeat;
+    background-size: 50% 50%, 50% 50%, 50% 50%;
+    background-position: center 10%, center 10%, center bottom;
+    transform: translate(-50%, -50%) rotate(3deg);
+    top: 50%;
+    left: 50%;
+}
+
+.icon-img::after {
+    content: '★';
+    font-size: 2.5em;
+    color: #ff9800;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 3;
+}
+
+
+</style>
+</head>
+<body>
+
+<!-- ====== SEARCH BAR ====== -->
+<div class="navbar">
+  <h1>HomeFindr</h1>
+  <div class="search-container">
+    <select id="propertyType">
+      <option>Buy</option>
+      <option>Rent</option>
+      <option>PG</option>
+      <option>Commercial</option>
+    </select>
+    <input type="text" id="searchInput" placeholder="Enter Locality / Project / Society / Landmark"
+      onfocus="showSuggestions()" onblur="hideSuggestionsWithDelay()">
+    <button class="icon-btn">📍</button>
+    <button class="icon-btn">🎤</button>
+    <button class="search-btn" onclick="performSearch()">🔍</button>
+    <div class="suggestion-panel" id="suggestionPanel">
+      <div class="filter-row">
+        <div class="filter">Property Types</div>
+        <div class="filter">Budget</div>
+        <div class="filter">Bedroom</div>
+        <div class="filter">Construction Status</div>
+        <div class="filter">Posted By</div>
+      </div>
+      <div class="checkboxes">
+        <label><input type="checkbox" checked> Flat / Apartment</label>
+        <label><input type="checkbox" checked> Independent / Builder Floor</label>
+        <label><input type="checkbox" checked> Independent House / Villa</label>
+        <label><input type="checkbox" checked> Residential Land</label>
+        <label><input type="checkbox" checked> 1 RK / Studio Apartment</label>
+        <label><input type="checkbox" checked> Farm House</label>
+        <label><input type="checkbox" checked> Serviced Apartments</label>
+        <label><input type="checkbox" checked> Other</label>
+      </div>
+      <div class="actions">
+        <button onclick="applyFilters()">Search</button>
+        <button class="cancel" onclick="hideSuggestions()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="result" style="text-align:center;margin-top:20px;"></div>
+
+<!-- ====== DASHBOARD PAGE ====== -->
+<div id="profilePage" class="page active">
+  <div class="main-wrapper">
+    
+    <!-- PROFILE CARD -->
+    <div class="profile-card">
+      <div class="profile-header"><div class="profile-image-container">
+        <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e" alt="Profile Picture" class="profile-image">
+        <button class="edit-icon-btn" onclick="openModal('editProfileModal')">+</button>
+  </div>
+        <div class="profile-details" style="color: black;">
+          <h2 id="profileName">Jane Doe</h2>
+          <p class="profile-email">📧 jane.doe@email.com</p>
+          <p class="profile-phone">📞 +91 98765 43210</p>
+          <!-- <p class="profile-role">🏢 Real Estate Agent</p> -->
+          <p class="profile-bio">
+            Enthusiastic home seeker exploring great properties and communities. Interested in finding the perfect place that fits lifestyle and comfort.</p>
+            <!-- Real estate enthusiast who enjoys exploring unique homes, new developments, and market trends.</p> -->
+    
+          </p>
+        </div>
+      </div>
+      
+      <!-- STATS SECTION -->
+      <div class="stats">
+        <div class="stat-item" onclick="openPage('sharedPage')">📤 <div><span id="sharedCount">0</span></div>Shared</div>
+        <!-- <div class="stat-item" onclick="openPage('viewedPage')">👁️ <div><span id="viewedCount">35</span></div>Viewed</div> -->
+        <div class="stat-item" onclick="openPage('likedPage')">❤️ <div><span id="likedCount">12</span></div>Liked</div>
+        <div class="stat-item" onclick="openPage('uploadedPage')">🏠 <div><span id="uploadedCount">0</span></div>Uploaded</div>
+      </div>
+    </div>
+
+    <!-- MY LISTINGS SECTION -->
+    <div class="section">
+      <h3>My Listings</h3>
+      <a onclick="openPage('likedPage')">View All Properties</a>
+    </div>
+
+    <!-- ACCOUNT SETTINGS SECTION -->
+    <div class="section">
+      <h3>Account Settings</h3>
+      <!-- <a onclick="openEditProfile()">Edit Profile</a> -->
+      <a onclick="showModal('changePasswordModal')">Change Password</a>
+      <a onclick="showModal('logoutModal')">Logout</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- ====== LIKED PAGE ====== -->
+<div id="likedPage" class="page">
+  <div class="main-wrapper">
+    <h2>Liked Properties</h2>
+    <div id="likedContainer" class="properties"></div>
+  </div>
+  <button class="back-btn" onclick="openPage('profilePage')">← Back</button>
+</div>
+
+<!-- Liked Popup -->
+<div id="likedPopup" class="modal">
+  <div class="modal-content" id="likedPopupContent">
+    <button class="modal-close" onclick="closeLikedPopup()">✕</button>
+    <h3 id="popupName"></h3>
+    <img id="popupImage" src="" style="width:100%; height:200px; object-fit:cover; border-radius:8px; margin-bottom:10px;">
+    <p id="popupPrice"></p>
+    <p id="popupDetails"></p>
+    <p id="popupDescription"></p>
+    <div class="rating" id="popupRating"></div>
+  </div>
+</div>
+<!-- ====== SHARED PAGE ====== -->
+<div id="sharedPage" class="page">
+  <div class="main-wrapper">
+  <div class="empty-state">
+    <div class="icon-placeholder icon-center">
+      <div class="icon-img icon-middle"></div>
+    </div>
+    <h2>No Shared Properties Yet!</h2>
+    <p class="subtitle">
+      Any properties that you share with friends or clients will appear here. Start sharing now!
+    </p>
+  </div>
+</div>
+<button class="back-btn" onclick="openPage('profilePage')">← Back</button>
+
+</div>
+
+<!-- ====== viewed PAGE ====== -->
+<div id="sharedPage" class="page">
+  <div class="main-wrapper">
+  <div class="empty-state">
+    <div class="icon-placeholder icon-center">
+      <div class="icon-img icon-middle"></div>
+    </div>
+    <h2>No Shared Properties Yet!</h2>
+    <p class="subtitle">
+      Any properties that you share with friends or clients will appear here. Start sharing now!
+    </p>
+  </div>
+</div>
+<button class="back-btn" onclick="openPage('profilePage')">← Back</button>
+
+</div>
+<!-- ====== UPLOADED PAGE ====== -->
+<div id="uploadedPage" class="page">
+  
+  <div class="main-wrapper">
+  <div class="empty-state">
+    <div class="icon-placeholder icon-center">
+      <div class="icon-img icon-middle"></div>
+    </div>
+    
+    <h2>No Uploaded Properties Yet!</h2>
+    
+    <p class="subtitle">
+      Any properties that you upload will appear here. Start adding properties now!
+    </p>
+  </div>
+</div>
+<button class="back-btn" onclick="openPage('profilePage')">← Back</button>
+
+</div>
+
+<!-- Edit Profile Modal -->
+<div id="editProfileModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('editProfileModal')">✕</button>
+  
+<form id="editProfileForm" style="margin-top:20px; background:#fff; border:1px solid #ddd; border-radius:12px; padding:20px; box-shadow:0 3px 10px rgba(0,0,0,0.1); max-width:500px;">
+  <h3 style="color:#004D40; margin-bottom:20px;">Edit Profile</h3>
+  <div style="margin-bottom:15px;">
+    <label for="name" style="display:block; color:#00796B; font-weight:bold; margin-bottom:6px;">Full Name</label>
+    <input type="text" id="name" placeholder="Enter your full name" required 
+      style="width:90%; padding:10px; border:1px solid #ccc; border-radius:8px; font-size:1em;">
+  </div>
+  <div style="margin-bottom:15px;">
+    <label for="email" style="display:block; color:#00796B; font-weight:bold; margin-bottom:6px;">Email Address</label>
+    <input type="email" id="email" placeholder="Enter your email" required 
+      style="width:90%; padding:10px; border:1px solid #ccc; border-radius:8px; font-size:1em;">
+  </div>
+  <div style="margin-bottom:15px;">
+    <label for="phone" style="display:block; color:#00796B; font-weight:bold; margin-bottom:6px;">Phone Number</label>
+    <input type="text" id="phone" placeholder="Enter your phone number" required 
+      style="width:90%; padding:10px; border:1px solid #ccc; border-radius:8px; font-size:1em;">
+  </div>
+  <div style="margin-bottom:15px;">
+    <label for="address" style="display:block; color:#00796B; font-weight:bold; margin-bottom:6px;">Address</label>
+    <input type="text" id="address" placeholder="Enter your address" 
+      style="width:90%; padding:10px; border:1px solid #ccc; border-radius:8px; font-size:1em;">
+  </div>
+  <div style="margin-bottom:15px;">
+    <label for="profilePic" style="display:block; color:#00796B; font-weight:bold; margin-bottom:6px;">Profile Picture</label>
+    <input type="file" id="profilePic" accept="image/*" 
+      style="width:90%; padding:8px; border:1px solid #ccc; border-radius:8px;">
+  </div>
+</form>
+<script>
+const editIcon = document.getElementById("editProfileIcon");
+const editForm = document.getElementById("editProfileForm");
+const cancelBtn = document.getElementById("cancelEdit");
+editIcon.addEventListener("click", () => {
+  editForm.style.display = (editForm.style.display === "block") ? "none" : "block";
+});
+cancelBtn.addEventListener("click", () => {
+  editForm.style.display = "none";
+});
+</script>
+    <div class="actions">
+      <button onclick="saveProfile()">Save</button>
+      <button class="cancel" onclick="closeModal('editProfileModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+<!-- ====== VIEWED PAGE ====== -->
+<div id="viewedPage" class="page">
+  <div class="main-wrapper">
+    <h2>Viewed Properties</h2>
+    <div id="viewedContainer" class="properties"></div>
+  </div>
+  <button class="back-btn" onclick="openPage('profilePage')">← Back</button>
+</div>
+<!-- Viewed Popup -->
+<div id="viewedPopup" class="modal">
+  <div class="modal-content" id="viewedPopupContent">
+    <button class="modal-close" onclick="closeViewedPopup()">✕</button>
+    <h3 id="viewedPopupName"></h3>
+    <img id="viewedPopupImage" src="" style="width:100%; height:200px; object-fit:cover; border-radius:8px; margin-bottom:10px;">
+    <p id="viewedPopupPrice"></p>
+    <p id="viewedPopupDetails"></p>
+    <p id="viewedPopupDescription"></p>
+    <div class="rating" id="viewedPopupRating"></div>
+  </div>
+</div>
+<!-- Logout Confirmation Modal -->
+<div id="logoutModal" class="modal">
+  <div class="modal-content">
+    <h3>Are you sure you want to logout?</h3>
+    <div class="actions" style="text-align:right; margin-top:10px;">
+      <button onclick="logout()">Yes</button>
+      <button onclick="closeModal('logoutModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+<!-- ====== CHANGE PASSWORD MODAL ====== -->
+<div id="changePasswordModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('changePasswordModal')">✕</button>
+    <h3>Change Password</h3>
+    <div style="margin:10px 0;">
+  <input type="password" id="currentPassword" placeholder="Current Password" style="width:90%; padding:8px; margin-bottom:8px; border-radius:6px; border:1px solid #80CBC4;">
+  <input type="password" id="newPassword" placeholder="New Password" style="width:90%; padding:8px; margin-bottom:8px; border-radius:6px; border:1px solid #80CBC4;">
+  <input type="password" id="confirmPassword" placeholder="Confirm New Password" style="width:90%; padding:8px; margin-bottom:12px; border-radius:6px; border:1px solid #80CBC4;">
+</div>
+    <div class="actions">
+      <button onclick="savePassword()">Save</button>
+      <button class="cancel" onclick="closeModal('changePasswordModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ====== SEARCH BAR ====== */
+function performSearch() {
+  const query = document.getElementById("searchInput").value;
+  document.getElementById("result").textContent = `Searching for: ${query}`;
+}
+function showSuggestions() { document.getElementById("suggestionPanel").style.display = "block"; }
+function hideSuggestions() { document.getElementById("suggestionPanel").style.display = "none"; }
+function hideSuggestionsWithDelay() { setTimeout(() => hideSuggestions(), 200); }
+function applyFilters() { hideSuggestions(); document.getElementById("result").textContent = "Filters applied successfully!"; }
+
+/* ====== DASHBOARD DATA ====== */
+let sharedData=[], viewedData=[], uploadedData=[], viewAllData=[];
+let likedData = [
+  {name: "Luxury Beachfront Villa",price: "₹2.8 Cr",rooms: "4 BHK",area: "3500 sq.ft",location: "Goa, India",badge: "Liked",rating: 5,image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d",description: "Stunning luxury villa with sea views."},
+  {name:"Luxury Beachfront Villa", price:"₹2.8 Cr", rooms:"4 BHK", area:"3500 sq.ft", location:"Goa, India", badge:"Liked", rating:5, image:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c", description:"Stunning luxury villa with sea views."},
+    {name:"Modern City Apartment", price:"₹1.4 Cr", rooms:"3 BHK", area:"1700 sq.ft", location:"Mumbai, Maharashtra", badge:"Liked", rating:4, image:"https://images.unsplash.com/photo-1580587771525-78b9dba3b914", description:"High-rise apartment with smart amenities."},
+  {name:"Mountain View Cabin", price:"₹1.2 Cr", rooms:"2 BHK", area:"1300 sq.ft", location:"Manali, Himachal Pradesh", badge:"Liked", rating:5, image:"https://images.unsplash.com/photo-1507089947368-19c1da9775ae", description:"Cozy cabin surrounded by forests."},
+  {name: "Family House",price: "₹1.5 Cr", rooms: "4 BHK", area: "2500 sq.ft", location: "Delhi", badge: "Liked",rating: 5,image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994",description: "Ideal family residence."},
+  {name: "Beach Cabin",price: "₹60 L",rooms: "2 BHK",area: "800 sq.ft",location: "Goa",badge: "Liked",rating: 4,image: "https://images.unsplash.com/photo-1505691938895-1758d7feb511",description: "Charming coastal retreat."},
+  { name: "Countryside Villa", price: "₹1.8 Cr", rooms: "4 BHK", area: "3000 sq.ft", location: "Chennai", badge: "Liked", rating: 4, image: "https://images.unsplash.com/photo-1523217582562-09d0def993a6", description: "Peaceful villa surrounded by nature."},
+  {name: "Duplex Home",price: "₹2.5 Cr",rooms: "4 BHK",area: "2800 sq.ft",location: "Kolkata",badge: "Liked",rating: 4,image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d",description: "Modern duplex home."},
+  {name: "Mountain Cabin", price: "₹85 L",rooms: "3 BHK", area: "1200 sq.ft", location: "Manali", badge: "Liked", rating: 5, image: "https://images.unsplash.com/photo-1505691938895-1758d7feb511", description: "Escape to the mountains." },
+  {name:"Luxury Beachfront Villa", price:"₹2.8 Cr", rooms:"4 BHK", area:"3500 sq.ft", location:"Goa, India", badge:"Liked", rating:5, image:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c", description:"Stunning luxury villa with sea views."},
+    {name:"Modern City Apartment", price:"₹1.4 Cr", rooms:"3 BHK", area:"1700 sq.ft", location:"Mumbai, Maharashtra", badge:"Liked", rating:4, image:"https://images.unsplash.com/photo-1580587771525-78b9dba3b914", description:"High-rise apartment with smart amenities."},
+  {name:"Mountain View Cabin", price:"₹1.2 Cr", rooms:"2 BHK", area:"1300 sq.ft", location:"Manali, Himachal Pradesh", badge:"Liked", rating:5, image:"https://images.unsplash.com/photo-1507089947368-19c1da9775ae", description:"Cozy cabin surrounded by forests."},
+  { name: "Luxury Beachfront Villa", price: "₹2.8 Cr", rooms: "4 BHK", area: "3500 sq.ft", location: "Goa, India", badge: "Liked", rating: 5, image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d", description: "Stunning luxury villa with sea views."},
+  {name:"Luxury Beachfront Villa", price:"₹2.8 Cr", rooms:"4 BHK", area:"3500 sq.ft", location:"Goa, India", badge:"Liked", rating:5, image:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c", description:"Stunning luxury villa with sea views."},
+    {name:"Modern City Apartment", price:"₹1.4 Cr", rooms:"3 BHK", area:"1700 sq.ft", location:"Mumbai, Maharashtra", badge:"Liked", rating:4, image:"https://images.unsplash.com/photo-1580587771525-78b9dba3b914", description:"High-rise apartment with smart amenities."},
+  {name:"Mountain View Cabin", price:"₹1.2 Cr", rooms:"2 BHK", area:"1300 sq.ft", location:"Manali, Himachal Pradesh", badge:"Liked", rating:5, image:"https://images.unsplash.com/photo-1507089947368-19c1da9775ae", description:"Cozy cabin surrounded by forests."},
+  { name: "Family House", price: "₹1.5 Cr", rooms: "4 BHK", area: "2500 sq.ft", location: "Delhi", badge: "Liked", rating: 5, image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994", description: "Ideal family residence."},
+  {name: "Beach Cabin", price: "₹60 L",rooms: "2 BHK",area: "800 sq.ft",location: "Goa",badge: "Liked",rating: 4,image: "https://images.unsplash.com/photo-1505691938895-1758d7feb511",description: "Charming coastal retreat."},
+  { name: "Countryside Villa", price: "₹1.8 Cr", rooms: "4 BHK", area: "3000 sq.ft", location: "Chennai", badge: "Liked", rating: 4, image: "https://images.unsplash.com/photo-1523217582562-09d0def993a6", description: "Peaceful villa surrounded by nature."},
+  {name: "Duplex Home", price: "₹2.5 Cr",rooms: "4 BHK",area: "2800 sq.ft",location: "Kolkata",badge: "Liked",rating: 4,image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d",description: "Modern duplex home."},
+  {name: "Mountain Cabin",price: "₹85 L",rooms: "3 BHK",area: "1200 sq.ft", location: "Manali",badge: "Liked",rating: 5,image: "https://images.unsplash.com/photo-1505691938895-1758d7feb511",description: "Escape to the mountains."},
+  {name:"Luxury Beachfront Villa", price:"₹2.8 Cr", rooms:"4 BHK", area:"3500 sq.ft", location:"Goa, India", badge:"Liked", rating:5, image:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c", description:"Stunning luxury villa with sea views."},
+  {name:"Modern City Apartment", price:"₹1.4 Cr", rooms:"3 BHK", area:"1700 sq.ft", location:"Mumbai, Maharashtra", badge:"Liked", rating:4, image:"https://images.unsplash.com/photo-1580587771525-78b9dba3b914", description:"High-rise apartment with smart amenities."},
+  {name:"Mountain View Cabin", price:"₹1.2 Cr", rooms:"2 BHK", area:"1300 sq.ft", location:"Manali, Himachal Pradesh", badge:"Liked", rating:5, image:"https://images.unsplash.com/photo-1507089947368-19c1da9775ae", description:"Cozy cabin surrounded by forests."},
+];
+/* ====== LIKED PAGE FUNCTIONS ====== */
+function populateLiked() {
+  const container = document.getElementById('likedContainer');
+  container.innerHTML = '';
+  likedData.forEach((p, index) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="badge">${p.badge||''}</div>
+      <img src="${p.image}" style="width:100%; height:160px; object-fit:cover;">
+      <div class="card-content">
+        <h3>${p.name}</h3>
+        <p><strong>Price:</strong> ${p.price}</p>
+        <p>${p.rooms} · ${p.area} · ${p.location}</p>
+        <div class="rating">${'★'.repeat(p.rating||0)}${'☆'.repeat(5-(p.rating||0))}</div>
+      </div>`;
+    card.onclick = () => openLikedPopup(index);
+    container.appendChild(card);
+  });
+}
+function openLikedPopup(index){
+  const property = likedData[index];
+  document.getElementById('popupName').innerText = property.name;
+  document.getElementById('popupImage').src = property.image;
+  document.getElementById('popupPrice').innerHTML = `<strong>Price:</strong> ${property.price}`;
+  document.getElementById('popupDetails').innerText = `${property.rooms} · ${property.area} · ${property.location}`;
+  document.getElementById('popupDescription').innerText = property.description;
+  document.getElementById('popupRating').innerText = '★'.repeat(property.rating||0)+'☆'.repeat(5-(property.rating||0));
+  document.getElementById('likedPopup').style.display = 'flex';
+}
+function closeLikedPopup(){ document.getElementById('likedPopup').style.display = 'none'; }
+window.addEventListener('click', function(e){
+  const popup = document.getElementById('likedPopupContent');
+  if(document.getElementById('likedPopup').style.display === 'flex' && !popup.contains(e.target)){
+    closeLikedPopup();
+  }
+});
+function openPage(pageId){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  if(pageId==='likedPage') populateLiked();
+  // if(pageId==='viewedPage') populateViewed();
+  // Check for shared or uploaded data
+  if(pageId === 'sharedPage' && sharedData.length === 0){
+    document.getElementById('sharedPage').classList.add('active');
+    return;
+  }
+  if(pageId === 'viewedPage' && viewedPage.length === 0){
+    document.getElementById('viewedPage').classList.add('active');
+    return;
+  }
+  if(pageId === 'uploadedPage' && uploadedData.length === 0){
+    document.getElementById('uploadedPage').classList.add('active');
+    return;
+  }
+}
+/* ====== MODALS ====== */
+function showModal(id){ document.getElementById(id).style.display = "flex"; }
+function closeModal(id){ document.getElementById(id).style.display = "none"; }
+function openModal(id) {
+  document.getElementById(id).style.display = "flex";
+}
+function openEditProfile(){
+  document.getElementById('editName').value = document.getElementById('profileName').textContent;
+  document.getElementById('editEmail').value = "janedoe@example.com";
+  document.getElementById('editPhone').value = "9876543210";
+  document.getElementById('editProfileModal').style.display = "flex";
+}
+function saveProfile(){
+  const newName = document.getElementById('editName').value;
+  const newEmail = document.getElementById('editEmail').value;
+  const newPhone = document.getElementById('editPhone').value;
+  document.getElementById('profileName').textContent = newName;
+  alert(`Profile updated:\nName: ${newName}\nEmail: ${newEmail}\nPhone: ${newPhone}`);
+  closeModal('editProfileModal');
+}
+function savePassword(){ alert("Password changed successfully!"); closeModal('changePasswordModal'); }
+function logout(){ alert("Logout successful!"); closeModal('logoutModal'); }
+function openPage(pageId){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  // Check for shared or uploaded data
+  if(pageId === 'sharedPage' && sharedData.length === 0){
+    document.getElementById('sharedPage').classList.add('active');
+    return;
+  }
+  if(pageId === 'uploadedPage' && uploadedData.length === 0){
+    document.getElementById('uploadedPage').classList.add('active');
+    return;
+  }
+  if(pageId === 'viewedPage' && viewedData.length === 0){
+    document.getElementById('viewedPage').classList.add('active');
+    return;
+  }
+  document.getElementById(pageId).classList.add('active');
+  if(pageId==='likedPage') populateLiked();
+}
+</script>
+</body>
+</html>

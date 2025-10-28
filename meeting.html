@@ -106,7 +106,8 @@
       text-align: center;
       padding: 50px 20px;
       background: url('https://images.unsplash.com/photo-1506765515384-028b60a970df')
-        no-repeat center center/cover;
+  no-repeat center center/cover;
+
       border-radius: 15px;
       width: 80%;
       margin: 30px auto;
@@ -235,7 +236,11 @@
 
     .info-box.email a:hover {
       text-decoration: underline;
-    }
+    }/* keep nav links visible in dark mode */
+body.dark nav .nav-links li a {
+  color: black !important;
+}
+
   </style>
 </head>
 <body>
@@ -440,4 +445,4 @@
     }
   </script>
 </body>
-</html>
+</html>  plz dont chnage my code just do what i told /

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Property Listing | View Number</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* PROPERTY CARD STYLING */
+    .property-card {
+      display: flex;
+      width: 90%;
+      max-width: 1000px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+
+    .leftPicture {
+      position: relative;
+      width: 45%;
+      height: 350px;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 24px;
+      background: rgba(0,0,0,0.4);
+      color: white;
+      padding: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .arrow.left { left: 10px; }
+    .arrow.right { right: 10px; }
+
+    .rightPicture {
+      padding: 20px;
+      width: 55%;
+    }
+
+    .details .priceApart {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .botton.section {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      align-items: center;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: #005ca8;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    button:hover {
+      background: #004a8b;
+    }
+
+    /* POPUP STYLING */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup-box {
+      background: white;
+      width: 700px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+
+    .popup-header {
+      background-color: #1c3d72;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .popup-header span {
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    .owner-info {
+      font-size: 0.9rem;
+      background: #f8f8f8;
+      padding: 10px 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .owner-info span {
+      display: block;
+    }
+
+    .popup-body {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .left, .right {
+      width: 48%;
+    }
+
+    label {
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 7px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    .checkbox-group label {
+      display: block;
+      margin-top: 5px;
+    }
+
+    .thank-you {
+      text-align: center;
+      padding: 30px;
+      display: none;
+    }
+
+    .thank-you h3 {
+      color: #005ca8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PROPERTY CARD -->
+  <div class="property-card">
+
+
+    <div class="rightPicture">
+      <div id="topHeading">
+        <div class="botton section">
+          <div class="contact"><button id="viewNumber">View Number</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- POPUP -->
+  <div class="popup" id="popup">
+    <div class="popup-box">
+      <div class="popup-header">
+        <p>You are requesting to view advertiser details.</p>
+        <span id="closePopup">&times;</span>
+      </div>
+
+      <div class="owner-info">
+        <span><strong>POSTED BY OWNER:</strong> +91 98***543* | ******@*****.com</span>
+        <span><strong>POSTED ON:</strong> Oct 11, 2025 | Rs. 2.5 Cr | Grace Iconic</span>
+      </div>
+
+      <div class="popup-body">
+        <div class="left">
+          <h4>Basic Information</h4>
+          <form id="popupForm">
+            <label>Your reason to buy is</label><br>
+            <input type="radio" name="reason" value="Investment" required> Investment
+            <input type="radio" name="reason" value="Self Use"> Self Use
+            <br><br>
+
+            <label>Are you a property dealer?</label><br>
+            <input type="radio" name="dealer" value="Yes" required> Yes
+            <input type="radio" name="dealer" value="No"> No
+            <br><br>
+
+            <label>Name</label>
+            <input type="text" placeholder="Enter your name" required>
+
+            <label>Phone</label>
+            <input type="tel" placeholder="+91 **********" required>
+        </div>
+
+        <div class="right">
+          <h4>Optional Information</h4>
+          <label>When are you planning to buy?</label><br>
+          <input type="radio" name="plan" value="3 months"> 3 months<br>
+          <input type="radio" name="plan" value="6 months"> 6 months<br>
+          <input type="radio" name="plan" value="More"> More than 6 months<br><br>
+
+          <div class="checkbox-group">
+            <label><input type="checkbox" checked> I am interested in site visits.</label>
+            <label><input type="checkbox"> I am interested in home loan.</label>
+            <label><input type="checkbox" required> I agree to Terms & Conditions.</label>
+          </div><br>
+
+          <button type="submit" class="btn" style="width:100%;">View Advertiser Details</button>
+        </div>
+        </form>
+      </div>
+
+      <div class="thank-you" id="thankYou">
+        <h3>✅ Thanks for requesting!</h3>
+        <p>You will receive advertiser details soon.</p>
+        <button class="btn" id="closeThank">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const viewNumber = document.getElementById('viewNumber');
+    const popup = document.getElementById('popup');
+    const closePopup = document.getElementById('closePopup');
+    const form = document.getElementById('popupForm');
+    const thankYou = document.getElementById('thankYou');
+    const closeThank = document.getElementById('closeThank');
+
+    viewNumber.addEventListener('click', () => {
+      popup.style.display = 'flex';
+    });
+
+    closePopup.addEventListener('click', () => {
+      popup.style.display = 'none';
+      resetForm();
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      form.style.display = 'none';
+      thankYou.style.display = 'block';
+    });
+
+    closeThank.addEventListener('click', () => {
+      popup.style.display = 'none';
+      resetForm();
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === popup) {
+        popup.style.display = 'none';
+        resetForm();
+      }
+    });
+
+    function resetForm() {
+      form.reset();
+      form.style.display = 'block';
+      thankYou.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

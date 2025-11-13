@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
   <nav>
     <div id="logo">
       <img src="../images/logo.png" alt="Logo">
@@ -30,12 +29,10 @@
     </div>
 
     <button id="post">Post Property</button>
-
-    <button class="profile-btn"><i class="fa-solid fa-user"></i></button>
+     <a href="../profile.html"><button class="profile-btn"><i class="fa-solid fa-user"></i></button></a>
+    <!--  -->
   </nav>
-
   <main class="container">
-   
     <aside class="filter-panel">
       <h2>Filters</h2>
       <div class="filter">
@@ -213,8 +210,8 @@
           <div class="description">Spacious 2,3,4 BHK apartments in Wadala are available for sale.Check out latest property options at Godrej Horizon housing society. This society is RERA approved and P51900034851 is the RERA number.</div>
           <div class="botton section">
             <div class="builder">Builder<br>Godrej Properties</div>
-            <div class ="brochure"><button id="bro1"><i class="fa-utility fa-semibold fa-arrow-down-to-line"></i>Brochure</button></div>
-            <div class ="contact"><button id="veiw">View Number</button></div>
+            <div class ="brochure"><a href="./borchure.html"><button id="bro1"><i class="fa-utility fa-semibold fa-arrow-down-to-line"></i>Brochure</button></a></div>
+            <div class ="contact"><a href="./viewnumber2.html"><button id="veiw">View Number</button></a></div>
           </div>
         </div>
       </div>
@@ -446,70 +443,50 @@
           <div class ="contact"><button id="veiw">View Number</button></div>
         </div>
       </div>
-    </div>
-<!-- </div> -->
+    </div><!-- </div> -->
 </section>
-</main>
-
+  </main>
   <script>
-  const images = [
-  '../images/Mumbai1.jpg',
-  '../images/Mumbai2.jpg',
-  '../images/Mumbai3.jpg',
-  '../images/Mumbai4.jpg'
-];
-
-let index = 0;
-const leftPicture = document.getElementsByClassName('leftPicture')[0]; // get first element
-
-// If you have dots and arrows
-const dots = document.querySelectorAll('.dot');
-const prev = document.querySelector('.arrow.left');
-const next = document.querySelector('.arrow.right');
-
-function showSlide(i) {
-  // Set background image
-  leftPicture.style.backgroundImage = `url('${images[i]}')`;
-  
-  // Update dots
-  if(dots.length > 0){
-    dots.forEach((dot, idx) => dot.classList.toggle('active', idx === i));
-  }
-  
+  const images = ['../images/Mumbai1.jpg','../images/Mumbai2.jpg','../images/Mumbai3.jpg','../images/Mumbai4.jpg'];
+  let index = 0;
+  const leftPicture = document.getElementsByClassName('leftPicture')[0]; // get first element
+  // // If you have dots and arrows
+  const dots = document.querySelectorAll('.dot');
+  const prev = document.querySelector('.arrow.left');
+  const next = document.querySelector('.arrow.right');
+  function showSlide(i) {
+    // Set background image
+    leftPicture.style.backgroundImage = `url('${images[i]}')`;
+    // Update dots
+    if(dots.length > 0){
+      dots.forEach((dot, idx) => dot.classList.toggle('active', idx === i));
+    }
   index = i; // update current index
-}
-
-function nextSlide() {
-  let nextIndex = (index + 1) % images.length;
-  showSlide(nextIndex);
-}
-
-function prevSlide() {
-  let prevIndex = (index - 1 + images.length) % images.length;
-  showSlide(prevIndex);
-}
-
-// Initial display
-showSlide(index);
-
-// Automatic slideshow every 1 second
-setInterval(nextSlide, 3000);
-
-// Arrow click events
-if(next) next.addEventListener('click', nextSlide);
-if(prev) prev.addEventListener('click', prevSlide);
-
-// Dot click events
-dots.forEach((dot, i) => {
-  dot.addEventListener('click', () => showSlide(i));
-});
-
-    const cities = ["Delhi", "Mumbai", "Noida", "Bangalore", "Pune", "Hyderabad", "Patna", "Chennai"];
-    const searchInput = document.getElementById("search-input");
-    let cityIndex = 0, charIndex = 0, typing = true;
-
-    function typeCity() {
-      const city = cities[cityIndex];
+  }
+  function nextSlide() {
+    let nextIndex = (index + 1) % images.length;
+    showSlide(nextIndex);
+  }
+  function prevSlide() {
+    let prevIndex = (index - 1 + images.length) % images.length;
+    showSlide(prevIndex);
+  }
+  // Initial display
+  showSlide(index);
+  // Automatic slideshow every 1 second
+  setInterval(nextSlide, 3000);
+  // Arrow click events
+  if(next) next.addEventListener('click', nextSlide);
+  if(prev) prev.addEventListener('click', prevSlide);
+  // Dot click events
+   dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => showSlide(i));
+  });
+  const cities = ["Delhi", "Mumbai", "Noida", "Bangalore", "Pune", "Hyderabad", "Patna", "Chennai"];
+  const searchInput = document.getElementById("search-input");
+  let cityIndex = 0, charIndex = 0, typing = true;
+  function typeCity() {
+    const city = cities[cityIndex];
       if (typing) {
         searchInput.placeholder = "Search properties in " + city.slice(0, charIndex) + "|";
         charIndex++;
@@ -531,13 +508,11 @@ dots.forEach((dot, i) => {
         }
       }
     }
-    typeCity();
-    // Toggle description Read More / Read Less
-const description = document.querySelector('.description');
-
-description.addEventListener('click', () => {
+  typeCity();
+  // Toggle description Read More / Read Less
+  const description = document.querySelector('.description');
+  description.addEventListener('click', () => {
   description.classList.toggle('expanded');
-  
   // Change arrow direction
   if(description.classList.contains('expanded')){
     description.style.maxHeight = "500px";
@@ -545,7 +520,6 @@ description.addEventListener('click', () => {
     description.style.maxHeight = "60px";
   }
 });
-
     // Dropdown toggle for filters
     document.querySelectorAll(".filter-header").forEach(header => {
       header.addEventListener("click", () => {
@@ -553,7 +527,6 @@ description.addEventListener('click', () => {
         parent.classList.toggle("active");
       });
     });
-
     // Toggle active class for buttons
     document.querySelectorAll(
       ".bhk-options button, .property-types button, .status-options button, .furnishing-options button"
@@ -562,14 +535,12 @@ description.addEventListener('click', () => {
         btn.classList.toggle("active");
       });
     });
-
     document.querySelectorAll(".toggle-desc").forEach(btn => {
     btn.addEventListener("click", () => {
     const desc = btn.parentElement;
     const shortText = desc.querySelector(".short-text");
     const fullText = desc.querySelector(".full-text");
     const icon = btn.querySelector("i");
-
     if(fullText.style.display === "block"){
       fullText.style.display = "none";
       shortText.style.display = "block";
@@ -584,18 +555,15 @@ description.addEventListener('click', () => {
   });
 });
 // Corrected JavaScript to initialize ALL sliders independently
-
 document.querySelectorAll('.property-card').forEach(card => {
     // 1. Get elements specific to this card
     const leftPicture = card.querySelector('.leftPicture');
     const slides = card.querySelectorAll('.slide');
     const dots = card.querySelectorAll('.dot');
     const prev = card.querySelector('.arrow.left');
-    const next = card.querySelector('.arrow.right');
-    
+    const next = card.querySelector('.arrow.right'); 
     // 2. Initialize the state for this specific card
     let currentSlide = 0;
-
     // 3. Function to display the correct slide
     function showSlide(n) {
         // Wrap the index
@@ -606,25 +574,20 @@ document.querySelectorAll('.property-card').forEach(card => {
         } else {
             currentSlide = n;
         }
-
         // Hide all slides and remove 'active' from all dots
         slides.forEach(slide => slide.classList.remove('active'));
         dots.forEach(dot => dot.classList.remove('active'));
-
         // Show the current slide and activate the dot
         slides[currentSlide].classList.add('active');
         dots[currentSlide].classList.add('active');
     }
-
     // 4. Navigation functions
     function nextSlide() {
         showSlide(currentSlide + 1);
     }
-
     function prevSlide() {
         showSlide(currentSlide - 1);
     }
-    
     // 5. Set up event listeners for this card
     if (next) next.addEventListener('click', nextSlide);
     if (prev) prev.addEventListener('click', prevSlide);

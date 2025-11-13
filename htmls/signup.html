@@ -48,28 +48,38 @@
     </div>
 
     <script src="https://kit.fontawesome.com/0ed85649cd.js" crossorigin="anonymous"></script>
-    <script>
-        
-        const video = document.getElementById("myVideo");
-        video.playbackRate = 0.3; 
+<script>
+  const video = document.getElementById("myVideo");
+  video.playbackRate = 0.3;
 
-        document.getElementById("signupForm").addEventListener("submit", function(event){
-            event.preventDefault();
+  document.getElementById("signupForm").addEventListener("submit", function (event) {
+    event.preventDefault();
 
-          
-            const userData = {
-                name: document.getElementById("name").value,
-                email: document.getElementById("email").value,
-                password: document.getElementById("pwd").value
-            };
+    // Get user data
+    const userData = {
+      name: document.getElementById("name").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      password: document.getElementById("pwd").value.trim()
+    };
 
-          
-            const jsonData = JSON.stringify(userData, null, 2);
+    // Get existing users from localStorage (if any)
+    let users = JSON.parse(localStorage.getItem("users")) || [];
 
-            console.log("User Data in JSON format:", jsonData);
+    // Add new user to the array
+    users.push(userData);
 
-        });
-        
+    // Store updated array back into localStorage
+    localStorage.setItem("users", JSON.stringify(users));
+
+    // Optional: show success message and clear form
+    alert("Sign-up successful! Your data has been saved.");
+    document.getElementById("signupForm").reset();
+
+    // Optional redirect after signup
+    // window.location.href = "login.html";
+  });
+</script>
+
         </script>
 </body>
 </html>

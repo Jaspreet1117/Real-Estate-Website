@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Brochure</title>
+  <style>
+    body {
+      background-color: black;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .popup {
+      background: #fff;
+      border-radius: 10px;
+      width: 600px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+
+    .popup-header {
+      background: #003366;
+      color: white;
+      padding: 12px 20px;
+      font-weight: bold;
+    }
+
+    .popup-content {
+      padding: 20px;
+    }
+
+    .section {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .section div {
+      width: 48%;
+    }
+
+    input[type="text"], input[type="tel"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+
+    .popup-footer {
+      text-align: right;
+      margin-top: 20px;
+    }
+
+    .popup-footer button {
+      background-color: #005ca8;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .popup-footer button:hover {
+      background-color: #004080;
+    }
+
+    label {
+      display: inline-block;
+      margin-top: 5px;
+    }
+
+    .thank-you {
+      display: none;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .thank-you h3 {
+      color: green;
+    }
+
+    .thank-you button {
+      background-color: #005ca8;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .thank-you button:hover {
+      background-color: #004080;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="popup">
+    <div class="popup-header">
+      Please fill in your details to download the brochure.
+    </div>
+
+    <!-- FORM SECTION -->
+    <div class="popup-content" id="formSection">
+      <div class="section">
+        <div>
+          <h4>Basic Information</h4>
+          <p>Your reason to buy is</p>
+          <label><input type="radio" name="reason" value="Investment"> Investment</label>
+          <label><input type="radio" name="reason" value="Self Use"> Self Use</label>
+
+          <p>Are you a property dealer?</p>
+          <label><input type="radio" name="dealer" value="Yes"> Yes</label>
+          <label><input type="radio" name="dealer" value="No"> No</label>
+
+          <p>Name</p>
+          <input type="text" id="name" placeholder="Enter your name">
+
+          <p>Phone</p>
+          <input type="tel" id="phone" placeholder="+91 **********">
+        </div>
+
+        <div>
+          <h4>Optional Information</h4>
+          <p>When are you planning to buy?</p>
+          <label><input type="radio" name="plan" value="3 months"> 3 months</label><br>
+          <label><input type="radio" name="plan" value="6 months"> 6 months</label><br>
+          <label><input type="radio" name="plan" value="More than 6 months"> More than 6 months</label>
+
+          <p><label><input type="checkbox" id="visit"> I am interested in site visits.</label></p>
+          <p><label><input type="checkbox" id="loan"> I am interested in home loan.</label></p>
+          <p><label><input type="checkbox" id="terms"> I agree to Terms & Conditions.</label></p>
+        </div>
+      </div>
+
+      <div class="popup-footer">
+        <button id="downloadBtn">Download Documents</button>
+      </div>
+    </div>
+
+    <!-- THANK YOU SECTION -->
+    <div class="thank-you" id="thankYouSection">
+      <h3>✅ Thank you!</h3>
+      <p>Your brochure is being downloaded.</p>
+      <button id="closeBtn">Close</button>
+    </div>
+  </div>
+
+  <script>
+    const downloadBtn = document.getElementById("downloadBtn");
+    const formSection = document.getElementById("formSection");
+    const thankYouSection = document.getElementById("thankYouSection");
+    const closeBtn = document.getElementById("closeBtn");
+
+    downloadBtn.addEventListener("click", () => {
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const reason = document.querySelector('input[name="reason"]:checked');
+      const dealer = document.querySelector('input[name="dealer"]:checked');
+      const terms = document.getElementById("terms");
+
+      // Validation (no visible error texts)
+      if (!reason) {
+        alert("Please select your reason to buy.");
+        return;
+      }
+      if (!dealer) {
+        alert("Please select if you are a property dealer.");
+        return;
+      }
+      if (name === "") {
+        alert("Please enter your name.");
+        return;
+      }
+      if (!/^[0-9]{10}$/.test(phone)) {
+        alert("Please enter a valid 10-digit phone number.");
+        return;
+      }
+      if (!terms.checked) {
+        alert("Please agree to the Terms & Conditions.");
+        return;
+      }
+
+      // Show Thank You message
+      formSection.style.display = "none";
+      thankYouSection.style.display = "block";
+
+      // Trigger download after slight delay
+      setTimeout(() => {
+        const link = document.createElement("a");
+        link.href = "brochure/GodrejHorizonBrochure.pdf"; // change your file path here
+        link.download = "GodrejHorizonBrochure.pdf";
+        link.click();
+      }, 1000);
+    });
+
+    closeBtn.addEventListener("click", () => {
+      thankYouSection.style.display = "none";
+      formSection.style.display = "block";
+      document.getElementById("name").value = "";
+      document.getElementById("phone").value = "";
+      document.querySelectorAll("input[type=radio]").forEach(r => r.checked = false);
+      document.querySelectorAll("input[type=checkbox]").forEach(c => c.checked = false);
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+body, html {
+    margin: 0; height: 100%; font-family: 'Segoe UI', sans-serif;
+}
+body {
+    background: url('../images/loginPageBackground.jpg') no-repeat center center/cover;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+}
+.overlay {
+    background: rgba(0,0,0,0.55); position: absolute; inset: 0;
+}
+.card {
+    position: relative; background: #fff; padding: 30px;
+    width: 90%; max-width: 350px;
+    border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,.25);
+    z-index: 2; text-align: center;
+}
+h1 { margin-bottom: 15px; color:#2c3e50; font-size: 1.8rem; }
+input {
+    width:100%; padding:10px; margin:8px 0;
+    border:1px solid #ddd; border-radius:8px; font-size: 1rem;
+}
+button {
+    width:100%; padding:12px; margin-top:10px;
+    border:none; border-radius:8px;
+    background:#3498db; color:white; font-weight:bold; cursor:pointer;
+    font-size: 1rem;
+}
+button:hover { background:#217dbb; }
+.links { margin-top:12px; font-size:0.9rem; }
+.links a { color:#3498db; cursor:pointer; text-decoration:none; }
+.links a:hover { text-decoration:underline; }
+/* Modal styles */
+.modal {
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6);
+    justify-content:center; align-items:center; z-index:5;
+    padding: 15px;
+}
+.modal-content {
+    background:#fff; padding:25px; width:100%; max-width:320px;
+    border-radius:10px; text-align:center;
+}
+.close {
+    float:right; font-size:20px; cursor:pointer; color:#333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    h1 { font-size: 1.5rem; }
+    .card { padding: 20px; }
+    input, button { font-size: 0.9rem; padding: 10px; }
+}
+@media (max-width: 400px) {
+    h1 { font-size: 1.3rem; }
+    .card { padding: 15px; border-radius: 8px; }
+    input, button { font-size: 0.85rem; }
+    .modal-content { padding: 20px; }
+}

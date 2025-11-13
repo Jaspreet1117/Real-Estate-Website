@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback Form</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="../css/feedBackFormPage.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+  <div class="feedback-box">
+    <div class="left">
+      <h2>Give us<br />Feedback</h2>
+      <p>We value your opinion to help us improve your experience.</p>
+    </div>
+
+    <div class="right">
+      <h3>You are giving feedback for:</h3>
+      <p class="property"><strong id="propertyName"></strong></p>
+
+      <div class="stars">
+        <span data-value="1">😡</span>
+        <span data-value="2">😕</span>
+        <span data-value="3">😐</span>
+        <span data-value="4">🙂</span>
+        <span data-value="5">😄</span>
+      </div>
+
+      <div class="question">Was the information by the owner correct?</div>
+      <div class="btn-group">
+        <button class="btn" id="yesBtn">Yes</button>
+        <button class="btn" id="noBtn">No</button>
+      </div>
+
+      <textarea id="commentBox" placeholder="Any additional comments..."></textarea>
+      <button class="submit-btn" id="submitBtn">Submit Feedback</button>
+    </div>
+  </div>
+
+  <script src="feedBackFormPage.js"></script>
+</body>
+</html>

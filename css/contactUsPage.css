@@ -1,0 +1,249 @@
+:root {
+    --primary-color: #0073e6;
+    --primary-hover: #005bb5;
+    --text-dark: #333;
+    --text-muted: #666;
+    --bg-white: #FFFFFF;
+    --bg-page-gradient: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+    --input-border: #ddd;
+}
+
+/* --- Base Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif; /* NEW: Modern Font */
+    margin: 0;
+    padding: 0;
+    background: var(--bg-page-gradient); /* NEW: Gradient for whole page */
+    color: var(--text-dark);
+}
+
+/* --- Navbar (Basic styles for context) --- */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: var(--bg-white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+nav .logo img { height: 50px; }
+nav .nav-links { list-style: none; display: flex; gap: 25px; }
+nav .nav-links li a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 600;
+    transition: color 0.3s;
+}
+nav .nav-links li a:hover { color: var(--primary-color); }
+
+/* --- Hero Section (Replaces old .contact-section) --- */
+.contact-hero {
+    text-align: center;
+    padding: 80px 20px 40px;
+    /* Removed background image for a cleaner look */
+}
+.contact-hero h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 10px;
+}
+.contact-hero p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- NEW: Main Contact Area (Container for Cards) --- */
+.contact-main {
+    padding: 0 20px 60px;
+}
+
+.contact-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- Left Side: Contact Form Card --- */
+.contact-form {
+    flex: 2;
+    min-width: 300px;
+    background: var(--bg-white);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: var(--card-shadow);
+}
+.contact-form h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: var(--text-dark);
+}
+.contact-form .form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.contact-form .form-row input,
+.contact-form textarea {
+    flex: 1;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--input-border); /* NEW: Subtle border */
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    transition: all 0.3s ease;
+}
+/* NEW: Proper textarea for messages */
+.contact-form textarea {
+    margin-bottom: 20px;
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* NEW: Focus effect */
+.contact-form .form-row input:focus,
+.contact-form textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px rgba(0, 115, 230, 0.3);
+}
+
+.contact-form button {
+    width: 100%; /* NEW: Full-width button */
+    padding: 15px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.contact-form button:hover {
+    background: linear-gradient(90deg, var(--primary-hover), #003f80);
+    box-shadow: 0 5px 15px rgba(0, 115, 230, 0.4);
+    transform: translateY(-2px);
+}
+
+/* --- Right Side: Info & Map --- */
+.contact-info-wrapper {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* NEW: Info Card */
+.info-card {
+    background: var(--bg-white);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: var(--card-shadow);
+}
+.info-card .info-box {
+    display: flex; /* NEW: Aligns icon and text */
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+.info-card .info-box:last-child {
+    margin-bottom: 0;
+}
+.info-card .info-box i {
+    font-size: 24px;
+    color: var(--primary-color); /* NEW: Unified icon color */
+    margin-top: 3px;
+    width: 25px; /* Ensures alignment */
+    text-align: center;
+}
+.info-card .info-box h3 {
+    margin: 0 0 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+.info-card .info-box p,
+.info-card .info-box a {
+    font-size: 1rem;
+    color: var(--text-muted); /* NEW: Softer text color */
+    text-decoration: none;
+    line-height: 1.6;
+}
+.info-card .info-box a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* --- NEW FEATURE: Map Container --- */
+.map-container {
+    border-radius: 15px;
+    overflow: hidden; /* Clips the map to the rounded corners */
+    box-shadow: var(--card-shadow);
+}
+.map-container iframe {
+    width: 100%;
+    height: 300px;
+    border: 0;
+    display: block; /* Removes tiny bottom margin */
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+    .contact-container {
+        flex-direction: column;
+    }
+    .contact-form .form-row {
+        flex-direction: column;
+    }
+}
+
+
+/* --- Footer (Basic styles for context) --- */
+footer {
+    background: #222;
+    color: #fff;
+    padding: 60px 20px 20px;
+    margin-top: 40px; /* Add some space */
+}
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: auto;
+}
+.footer-col h4 {
+    font-size: 18px; margin-bottom: 20px; font-weight: 600;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin: 10px 0; }
+.footer-col ul li a { color: #bbb; text-decoration: none; transition: color 0.3s; }
+.footer-col ul li a:hover { color: var(--primary-color); }
+.footer-col p { font-size: 14px; line-height: 1.6; color: #bbb; }
+.footer-col p a { color: #bbb; text-decoration: none; }
+.footer-col p a:hover { color: var(--primary-color); }
+.social-icons { margin-top: 15px; }
+.social-icons a {
+    display: inline-block; margin-right: 12px; font-size: 20px;
+    color: #bbb; transition: color 0.3s, transform 0.3s;
+}
+.social-icons a:hover { color: var(--primary-color); transform: translateY(-3px); }
+.footer-bottom {
+    text-align: center; padding: 25px 15px 10px;
+    margin-top: 40px; border-top: 1px solid #444; font-size: 14px; color: #bbb;
+}

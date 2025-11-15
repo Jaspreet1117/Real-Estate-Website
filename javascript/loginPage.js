@@ -1,27 +1,37 @@
-// Modal handling
-const forgotLink = document.getElementById("forgotLink");
-forgotLink.onclick = () => document.getElementById("forgotModal").style.display = "flex";
+const loginSuccess = document.getElementById("loginSuccess");
+const loginError = document.getElementById("loginError");
 
+function showAlert(alertBox) {
+    alertBox.style.display = "block";
+    alertBox.classList.add("show");  // animate fade-in
 
-function closeModal(id) {
-    document.getElementById(id).style.display = "none";
+    setTimeout(() => {
+        alertBox.classList.remove("show");
+        alertBox.style.display = "none";
+    }, 2500);
 }
 
-window.onclick = (e) => {
-    if (e.target.classList.contains("modal")) {
-    e.target.style.display = "none";
-    }
-};
 const form = document.querySelector('form');
 form.addEventListener('submit', function(e) {
-    e.preventDefault(); // prevent page reload
+    e.preventDefault();
 
-    const username = form.querySelector('input[type="text"]').value.trim();
-    const password = form.querySelector('input[type="password"]').value;
+    const enteredUser = form.querySelector('input[type="text"]').value.trim();
+    const enteredPwd = form.querySelector('input[type="password"]').value;
 
-    if (username === 'fee' && password === '1234') {
-    alert('Login successfully');
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    const validUser = users.find(user =>
+        (user.email === enteredUser || user.name === enteredUser) && user.password === enteredPwd
+    );
+
+    if (validUser) {
+        showAlert(loginSuccess);
+        localStorage.setItem("currentUser", JSON.stringify(validUser));
+
+        setTimeout(() => {
+            window.location.href = "homePage.html";
+        }, 2000);
     } else {
-    alert('Invalid username or password');
+        showAlert(loginError);
     }
 });

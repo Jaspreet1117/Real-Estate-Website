@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js">
     <link rel="stylesheet" href="../css/signUp.css">
 </head>
 <body>
-    <div class="container">
+    <div class="containerl">
+        <!-- Error Alert -->
+        <div id="errorAlert" class="alert alert-danger d-flex align-items-center fade" role="alert" style="display:none;">
+            <div>⚠️ User already exists. Please login instead.</div>
+        </div>
+
+        <!-- Success Alert -->
+        <div id="successAlert" class="alert alert-success d-flex align-items-center fade" role="alert" style="display:none;">
+            <div>🎉 Signup successful! Redirecting to login...</div>
+        </div>
+
+
         <video autoplay muted loop id="myVideo">
-        <source src="../images/signup.mov" type="video/mp4">
+            <source src="../images/signup.mov" type="video/mp4">
         </video>
 
         <div class="signUp">
@@ -21,65 +33,29 @@
                     <span>Sign Up with Google</span>
                 </div>
                 <div class="or"><p>OR</p></div>
+
                 <div class="form">
                     <form id="signupForm">
-                        <label for="name"></label><br>
                         <input type="text" id="name" name="name" placeholder="Name" required><br>
-
-                        <label for="email"></label><br>
-                        <input type="email" id="email" name="email" placeholder="Email or Phone number"><br>
-
-                        <label for="pwd"></label><br>
+                        <input type="email" id="email" name="email" placeholder="Email or Phone number" required><br>
                         <input type="password" id="pwd" name="pwd" placeholder="Password" required><br>
 
                         <div class="submit">
-                            <p>Already have an account ? <a id="login" href="">Login</a></p>
+                            <p>Already have an account ? <a id="login" href="../htmls/loginPage.html">Login</a></p>
                             <button type="submit">Sign Up</button>
-                            
                         </div>
+
                         <div class="rememberMe">
-                            <label for="rememberMe"></label>
                             <input type="checkbox" id="rememberMe" name="rememberMe"> Remember Me
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/0ed85649cd.js" crossorigin="anonymous"></script>
-<script>
-  const video = document.getElementById("myVideo");
-  video.playbackRate = 0.3;
-
-  document.getElementById("signupForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    // Get user data
-    const userData = {
-      name: document.getElementById("name").value.trim(),
-      email: document.getElementById("email").value.trim(),
-      password: document.getElementById("pwd").value.trim()
-    };
-
-    // Get existing users from localStorage (if any)
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-
-    // Add new user to the array
-    users.push(userData);
-
-    // Store updated array back into localStorage
-    localStorage.setItem("users", JSON.stringify(users));
-
-    // Optional: show success message and clear form
-    alert("Sign-up successful! Your data has been saved.");
-    document.getElementById("signupForm").reset();
-
-    // Optional redirect after signup
-    // window.location.href = "login.html";
-  });
-</script>
-
-        </script>
+    <script src="../javascript/signup.js"></script>
 </body>
 </html>

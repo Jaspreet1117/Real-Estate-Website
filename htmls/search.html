@@ -780,20 +780,71 @@ document.querySelectorAll('.property-card').forEach(card => {
 (function() {
   const likeButtons = document.querySelectorAll('.fa-regular.fa-heart');
 
+  // 1. Load existing likes on page load to keep hearts red
+  const savedLikes = JSON.parse(localStorage.getItem('likedProperties')) || [];
+  
   likeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      // Toggle heart classes: empty <-> solid
-      if (button.classList.contains('fa-regular')) {
+    const card = button.closest('.property-card');
+    const propName = card.querySelector('#propertyName').textContent.trim();
+
+    // Check if this property is already in storage
+    const isLiked = savedLikes.some(item => item.name === propName);
+    
+    if (isLiked) {
+      button.classList.remove('fa-regular');
+      button.classList.add('fa-solid', 'liked');
+      button.style.color = "red"; // Optional visual cue
+    }
+
+    // 2. Click Event Listener
+    button.addEventListener('click', (e) => {
+      e.stopPropagation(); // Stop the card click event (navigation) from firing
+
+      // Get latest list from storage
+      let currentLikes = JSON.parse(localStorage.getItem('likedProperties')) || [];
+      
+      // Extract Data from the card
+      const card = button.closest('.property-card');
+      
+      // Get the first image from the active slide or first slide
+      const activeSlide = card.querySelector('.slide.active') || card.querySelector('.slide');
+      let imageUrl = '';
+      if(activeSlide) {
+          const bgStyle = window.getComputedStyle(activeSlide).backgroundImage;
+          // Clean up url('...') to get just the link
+          imageUrl = bgStyle.slice(5, -2).replace(/['"]/g, ""); 
+      }
+
+      const propertyObj = {
+        name: card.querySelector('#propertyName').textContent.trim(),
+        location: card.querySelector('.infoWhere h6').textContent.trim(),
+        price: card.querySelector('.details #price b')?.textContent.trim() || "Price on Request",
+        image: imageUrl
+      };
+
+      // Check if already liked
+      const index = currentLikes.findIndex(item => item.name === propertyObj.name);
+
+      if (index === -1) {
+        // ADD LIKE
+        currentLikes.push(propertyObj);
         button.classList.remove('fa-regular');
         button.classList.add('fa-solid', 'liked');
+        button.style.color = "red";
+        // alert("Added to Liked Properties");
       } else {
+        // REMOVE LIKE (Toggle off)
+        currentLikes.splice(index, 1);
         button.classList.remove('fa-solid', 'liked');
         button.classList.add('fa-regular');
+        button.style.color = ""; // Reset color
       }
+
+      // Save back to Local Storage
+      localStorage.setItem('likedProperties', JSON.stringify(currentLikes));
     });
   });
 })();
-
 // REPLACE your last script block in search2.html with this
 // ===== CLICK NAVIGATION SCRIPT =====
 document.querySelectorAll(".property-card").forEach(card => {

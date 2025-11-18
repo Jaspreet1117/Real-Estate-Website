@@ -139,8 +139,8 @@ td,th{
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #0337483a;;
-    color: #033748;
+    background-color:#005ca851;
+    color: #005ca8;
     font-size: large;
     font-weight: bold;
     border: none;
@@ -206,7 +206,7 @@ td,th{
 .searchButton{
     width: 80px;
     height: 40px;
-    background-color: #033748;
+    background-color:#005ca8;
     color: white;
     font-size: large;
     font-weight: 700;
@@ -218,8 +218,8 @@ td,th{
     transform: scale(0.96);
 }
 .searchButton:hover{
-    background-color: #03374844;
-    color: #033748;
+    background-color:#005ca851;
+    color: #005ca8;
 }
 .allResidential{
     width: 100%;
@@ -297,11 +297,11 @@ td,th{
 }
 .sub-option{
     display: flex;
-    background-color:rgba(3, 55, 72, 0.873);
+    background-color:#005ca8;
     color: white;
     justify-content: center;
     align-items: center;
-    border: 2px solid rgba(3, 55, 72, 0.566);
+    border: #005ca8;
     /* gap: 5%; */ 
     padding: 4%;
     border-radius: 6px;
@@ -314,7 +314,7 @@ td,th{
 }
 .op:hover .sub-option:hover{
     background-color: white;
-    color: #033748;
+    color: #005ca8;
 }
 .op:hover .imageSetting{
     /* display: none; */

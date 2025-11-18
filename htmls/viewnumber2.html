@@ -3,209 +3,480 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>View Advertiser Details</title>
+  <title>Contact Advertiser - HomeFindr</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
+    :root {
+      --primary: #005ca8;
+      --primary-dark: #004080;
+      --accent: #eefffa;
+      --text: #333;
+      --text-light: #666;
+      --border: #ddd;
+      --error: #e74c3c;
+    }
+
     body {
-      background-color: black;
-      font-family: Arial, sans-serif;
+      background-color: rgba(0, 0, 0, 0.85);
+      font-family: 'Poppins', sans-serif;
       margin: 0;
-      padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      backdrop-filter: blur(5px);
     }
 
-    .popup {
+    .popup-card {
       background: #fff;
-      border-radius: 10px;
-      width: 600px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      width: 750px;
+      max-width: 95%;
+      border-radius: 16px;
       overflow: hidden;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+      animation: slideUp 0.4s ease-out;
+      position: relative;
     }
 
-    .popup-header {
-      background: #003366;
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- Header Section --- */
+    .header {
+      background: var(--primary);
       color: white;
-      padding: 12px 20px;
-      font-weight: bold;
-    }
-
-    .popup-content {
-      padding: 20px;
-    }
-
-    .section {
+      padding: 20px 30px;
       display: flex;
       justify-content: space-between;
-      margin-top: 15px;
+      align-items: center;
     }
 
-    .section div {
-      width: 48%;
+    .header h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    .close-icon {
+      cursor: pointer;
+      font-size: 1.2rem;
+      opacity: 0.8;
+      transition: 0.3s;
+    }
+    .close-icon:hover { opacity: 1; }
+
+    /* --- Property Context Bar --- */
+    .property-context {
+      background: var(--accent);
+      padding: 15px 30px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .prop-info h3 {
+      margin: 0;
+      color: var(--primary);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .prop-info p {
+      margin: 4px 0 0;
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    .badge {
+      background: #fff;
+      color: var(--primary);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid var(--primary);
+    }
+
+    /* --- Content Area --- */
+    .content {
+      padding: 30px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    h4 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      color: var(--text-light);
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 8px;
+      margin-bottom: 15px;
+      margin-top: 0;
+    }
+
+    .label-text {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+      display: block;
+      color: var(--text);
+    }
+
+    /* --- Inputs --- */
+    .input-group {
+      margin-bottom: 15px;
+      position: relative;
     }
 
     input[type="text"], input[type="tel"] {
       width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      margin-top: 5px;
+      padding: 12px 15px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+      transition: 0.3s;
     }
 
-    .popup-footer {
-      text-align: right;
-      margin-top: 20px;
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 92, 168, 0.1);
     }
 
-    .popup-footer button {
-      background-color: #005ca8;
+    .error-msg {
+      color: var(--error);
+      font-size: 0.75rem;
+      margin-top: 4px;
+      display: none;
+    }
+
+    input.input-error {
+      border-color: var(--error);
+      background: #fffcfc;
+    }
+
+    /* --- Selection Chips (Radio Replacement) --- */
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .chip-group input[type="radio"] {
+      display: none;
+    }
+
+    .chip-group label {
+      padding: 8px 16px;
+      background: #f5f5f5;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: 0.2s;
+      color: var(--text-light);
+    }
+
+    .chip-group input:checked + label {
+      background: var(--primary);
       color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 92, 168, 0.2);
+    }
+
+    /* --- Checkboxes --- */
+    .checkbox-wrapper {
+      margin-bottom: 8px;
+    }
+    .checkbox-wrapper label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: var(--text);
       cursor: pointer;
     }
-
-    .popup-footer button:hover {
-      background-color: #004080;
+    .checkbox-wrapper input {
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
     }
 
-    label {
-      display: inline-block;
-      margin-top: 5px;
+    /* --- Footer Button --- */
+    .footer {
+      margin-top: 10px;
+      text-align: right;
     }
 
-    .thank-you {
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .btn-primary:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* --- Success View --- */
+    .success-view {
       display: none;
       text-align: center;
-      padding: 30px;
+      padding: 40px;
+    }
+    .contact-reveal {
+      background: #f0f8ff;
+      border: 2px dashed var(--primary);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+    .big-phone {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: block;
+      margin-top: 10px;
     }
 
-    .thank-you h3 {
-      color: green;
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; gap: 10px; }
+      .popup-card { width: 100%; height: 100vh; border-radius: 0; }
     }
+    
+    /* Spinner */
+    .spinner {
+        width: 18px;
+        height: 18px;
+        border: 3px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+        display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    .thank-you button {
-      background-color: #005ca8;
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 15px;
-    }
-
-    .thank-you button:hover {
-      background-color: #004080;
-    }
   </style>
 </head>
 <body>
 
-  <div class="popup">
-    <div class="popup-header">
-      You are requesting to view advertiser details.
+  <div class="popup-card">
+    <div class="header">
+      <h2><i class="fa-solid fa-user-lock"></i> View Advertiser Details</h2>
+      <i class="fa-solid fa-xmark close-icon" onclick="goBack()"></i>
     </div>
 
-    <!-- FORM SECTION -->
-    <div class="popup-content" id="formSection">
-      <p><strong>POSTED BY OWNER:</strong> +91 98***543* | *****@*****.com</p>
-      <p><strong>POSTED ON:</strong> Oct 11, 2025 | Rs. 2.5 Cr | Grace Iconic</p>
+    <div class="property-context">
+      <div class="prop-info">
+        <h3 id="propName">Loading Property...</h3>
+        <p id="propPrice">Fetching Details...</p>
+      </div>
+      <span class="badge">Verified Owner</span>
+    </div>
 
-      <div class="section">
+    <div class="content" id="mainContent">
+      <div class="form-grid">
+        
         <div>
-          <h4>Basic Information</h4>
-          <p>Your reason to buy is</p>
-          <label><input type="radio" name="reason" value="Investment"> Investment</label>
-          <label><input type="radio" name="reason" value="Self Use"> Self Use</label>
+          <h4>Your Intent</h4>
+          
+          <span class="label-text">Buying For?</span>
+          <div class="chip-group">
+            <input type="radio" id="inv" name="reason" value="Investment">
+            <label for="inv">Investment</label>
+            
+            <input type="radio" id="self" name="reason" value="Self Use">
+            <label for="self">Self Use</label>
+          </div>
+          <div class="error-msg" id="err-reason">Select a reason.</div>
 
-          <p>Are you a property dealer?</p>
-          <label><input type="radio" name="dealer" value="Yes"> Yes</label>
-          <label><input type="radio" name="dealer" value="No"> No</label>
+          <span class="label-text">Are you a Dealer?</span>
+          <div class="chip-group">
+            <input type="radio" id="yes" name="dealer" value="Yes">
+            <label for="yes">Yes</label>
+            
+            <input type="radio" id="no" name="dealer" value="No">
+            <label for="no">No</label>
+          </div>
+          <div class="error-msg" id="err-dealer">Required.</div>
 
-          <p>Name</p>
-          <input type="text" id="name" placeholder="Enter your name">
-
-          <p>Phone</p>
-          <input type="tel" id="phone" placeholder="+91 **********">
+          <div class="input-group">
+            <span class="label-text">Full Name</span>
+            <input type="text" id="name" placeholder="e.g. Janki Doe">
+            <div class="error-msg" id="err-name">Name is required.</div>
+          </div>
         </div>
 
         <div>
-          <h4>Optional Information</h4>
-          <p>When are you planning to buy?</p>
-          <label><input type="radio" name="plan" value="3 months"> 3 months</label><br>
-          <label><input type="radio" name="plan" value="6 months"> 6 months</label><br>
-          <label><input type="radio" name="plan" value="More than 6 months"> More than 6 months</label>
+          <h4>Contact Info</h4>
+          
+          <div class="input-group">
+            <span class="label-text">Phone Number</span>
+            <input type="tel" id="phone" placeholder="+91 98765 43210" maxlength="10">
+            <div class="error-msg" id="err-phone">Valid 10-digit number required.</div>
+          </div>
 
-          <p><label><input type="checkbox" id="visit"> I am interested in site visits.</label></p>
-          <p><label><input type="checkbox" id="loan"> I am interested in home loan.</label></p>
-          <p><label><input type="checkbox" id="terms"> I agree to Terms & Conditions.</label></p>
+          <span class="label-text">Planning to buy in?</span>
+          <div class="chip-group">
+            <input type="radio" id="3m" name="plan" value="3m">
+            <label for="3m">3 Months</label>
+            <input type="radio" id="6m" name="plan" value="6m">
+            <label for="6m">6 Months</label>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <div class="checkbox-wrapper">
+              <label><input type="checkbox" id="visit"> I'm interested in Site Visits</label>
+            </div>
+            <div class="checkbox-wrapper">
+              <label><input type="checkbox" id="loan"> I'm interested in Home Loan</label>
+            </div>
+            <div class="checkbox-wrapper">
+              <label><input type="checkbox" id="terms"> I agree to Terms & Conditions</label>
+            </div>
+            <div class="error-msg" id="err-terms" style="margin-top: -5px;">You must accept terms.</div>
+          </div>
         </div>
       </div>
 
-      <div class="popup-footer">
-        <button id="submitBtn">View Advertiser Details</button>
+      <div class="footer">
+        <button class="btn-primary" id="submitBtn">
+          <span id="btnText">View Details</span>
+          <div class="spinner" id="spinner"></div>
+        </button>
       </div>
     </div>
 
-    <!-- THANK YOU SECTION -->
-    <div class="thank-you" id="thankYouSection">
-      <h3>✅ Thanks for requesting!</h3>
-      <p>You will receive advertiser details soon.</p>
-      <button id="closeBtn">Close</button>
+    <div class="success-view" id="successView">
+      <i class="fa-regular fa-circle-check" style="font-size: 4rem; color: #27ae60; margin-bottom: 15px;"></i>
+      <h3 style="color: #27ae60; margin: 0;">Request Approved!</h3>
+      <p>Here are the advertiser details for this property.</p>
+
+      <div class="contact-reveal">
+        <span>Advertiser Name: <strong id="revealOwner">M S Vani</strong></span>
+        <span class="big-phone" id="revealPhone">+91 98765 43210</span>
+        <span style="font-size: 0.9rem; color: #666;">vani.owner@example.com</span>
+      </div>
+
+      <button class="btn-primary" onclick="goBack()">Back to Property</button>
     </div>
+
   </div>
 
   <script>
-    const submitBtn = document.getElementById("submitBtn");
-    const formSection = document.getElementById("formSection");
-    const thankYouSection = document.getElementById("thankYouSection");
-    const closeBtn = document.getElementById("closeBtn");
-
-    submitBtn.addEventListener("click", () => {
-      // Collect values
-      const name = document.getElementById("name").value.trim();
-      const phone = document.getElementById("phone").value.trim();
-      const reason = document.querySelector('input[name="reason"]:checked');
-      const dealer = document.querySelector('input[name="dealer"]:checked');
-      const terms = document.getElementById("terms");
-
-      // Validation
-      if (!reason) {
-        alert("Please select your reason to buy.");
-        return;
-      }
-      if (!dealer) {
-        alert("Please select if you are a property dealer.");
-        return;
-      }
-      if (name === "") {
-        alert("Please enter your name.");
-        return;
-      }
-      if (!/^[0-9]{10}$/.test(phone)) {
-        alert("Please enter a valid 10-digit phone number.");
-        return;
-      }
-      if (!terms.checked) {
-        alert("Please agree to the Terms & Conditions.");
-        return;
-      }
-
-      // If all good → Show Thank You section
-      formSection.style.display = "none";
-      thankYouSection.style.display = "block";
+    // --- 1. Load Dynamic Data ---
+    document.addEventListener("DOMContentLoaded", () => {
+        const storedData = sessionStorage.getItem('selectedProperty');
+        
+        if (storedData) {
+            const data = JSON.parse(storedData);
+            // Update Header details
+            document.getElementById('propName').textContent = data.name || "Property Details";
+            document.getElementById('propPrice').textContent = data.price || "Price on Request";
+            
+            // Update "Reveal" section with mock logic or stored data
+            // In a real app, this would come from the database
+            if(data.name.includes("Godrej")) {
+                document.getElementById('revealOwner').textContent = "Godrej Sales Team";
+                document.getElementById('revealPhone').textContent = "+91 99887 76655";
+            }
+        }
     });
 
-    closeBtn.addEventListener("click", () => {
-      // Reset form & sections
-      thankYouSection.style.display = "none";
-      formSection.style.display = "block";
-      document.getElementById("name").value = "";
-      document.getElementById("phone").value = "";
-      document.querySelectorAll("input[type=radio]").forEach(r => r.checked = false);
-      document.querySelectorAll("input[type=checkbox]").forEach(c => c.checked = false);
+    function goBack() {
+        window.location.href = "../htmls/page1/page1.html";
+    }
+
+    // --- 2. Form Handling ---
+    const submitBtn = document.getElementById("submitBtn");
+    const mainContent = document.getElementById("mainContent");
+    const successView = document.getElementById("successView");
+    const btnText = document.getElementById("btnText");
+    const spinner = document.getElementById("spinner");
+
+    // Helper for errors
+    function toggleError(id, show) {
+        document.getElementById(id).style.display = show ? 'block' : 'none';
+    }
+    function toggleInputError(id, show) {
+        const el = document.getElementById(id);
+        if(show) el.classList.add('input-error');
+        else el.classList.remove('input-error');
+    }
+
+    submitBtn.addEventListener("click", () => {
+        // Get Values
+        const name = document.getElementById("name").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const reason = document.querySelector('input[name="reason"]:checked');
+        const dealer = document.querySelector('input[name="dealer"]:checked');
+        const terms = document.getElementById("terms").checked;
+
+        let isValid = true;
+
+        // Validate Reason
+        if (!reason) { toggleError('err-reason', true); isValid = false; } 
+        else toggleError('err-reason', false);
+
+        // Validate Dealer
+        if (!dealer) { toggleError('err-dealer', true); isValid = false; }
+        else toggleError('err-dealer', false);
+
+        // Validate Name
+        if (name === "") { toggleError('err-name', true); toggleInputError('name', true); isValid = false; }
+        else { toggleError('err-name', false); toggleInputError('name', false); }
+
+        // Validate Phone
+        if (!/^[0-9]{10}$/.test(phone)) { toggleError('err-phone', true); toggleInputError('phone', true); isValid = false; }
+        else { toggleError('err-phone', false); toggleInputError('phone', false); }
+
+        // Validate Terms
+        if (!terms) { toggleError('err-terms', true); isValid = false; }
+        else toggleError('err-terms', false);
+
+        if (!isValid) return;
+
+        // Loading State
+        submitBtn.disabled = true;
+        btnText.textContent = "Verifying...";
+        spinner.style.display = "block";
+
+        // Simulate API delay
+        setTimeout(() => {
+            mainContent.style.display = "none";
+            successView.style.display = "block";
+            // Optional: Hide context bar or update it
+        }, 1500);
     });
   </script>
 

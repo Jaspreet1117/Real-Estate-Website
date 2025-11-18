@@ -44,7 +44,7 @@ const LoginPage = () => {
       localStorage.setItem("currentUser", JSON.stringify(validUser));
 
       setTimeout(() => {
-        window.location.href = "/";
+        window.location.href = "/homePage.html"; // what to do now 
       }, 2000);
     } else {
       showAlert('error');

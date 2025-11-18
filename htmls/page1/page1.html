@@ -31,7 +31,7 @@
                     <i class="fa-solid fa-microphone mic-icon"></i>
                 </div>
                 <button id="post">Post Property</button>
-                <a href="../../profile.html"><button class="profile-btn"><i class="fa-solid fa-user"></i></button></a>
+                <a href="../profilePage.html"><button class="profile-btn"><i class="fa-solid fa-user"></i></button></a>
             </nav>
         </div>
         <div class="information">
@@ -75,20 +75,20 @@
                 <a class="nav-link" href="#main">Overview</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Owner Details</a>
+                <a class="nav-link" href="#od">Owner Details</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Explore Locality</a>
+                <a class="nav-link" href="#el">Explore Locality</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Featured Dealer</a>
+                <a class="nav-link" href="#fd">Featured Dealer</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Recommendation</a>
+                <a class="nav-link" href="#rev">Reviews</a>
                 </li>
-                <li class="nav-item">
-                <a class="nav-link" href="#">Article</a>
-                </li>
+                <!-- <li class="nav-item">
+                <a class="nav-link" href="#a">Article</a>
+                </li> -->
             </ul>
             
         </div>
@@ -203,7 +203,7 @@
             </div>
         </div>
         <hr class="bar">
-        <div class="aboutProperty">
+        <div class="aboutProperty" id="el">
             <div class="about">
                 <h5>About Property</h5>
             </div>
@@ -268,7 +268,7 @@
             
         </div>
         <hr class="bar">
-        <div class="ownerDetails">
+        <div class="ownerDetails" id="od">
             <div class="xyz">
                 <div class="odetails">
                     <h5>Owner's Detail</h5>
@@ -326,7 +326,7 @@
                     </button> -->
                 </div>
             </div>
-            <div class="pgs">
+            <div class="pgs" id="rev">
                 <div class="left">
                     <div class="rate">
                         <p><span class="valueRating" style="font-size: 25px; margin: 0; margin-bottom: 0%;"><strong>4.2</strong></span><span>/5</span></p>
@@ -371,9 +371,128 @@
         </div>
     </div>
     
-    <script src="./page1.js"></script>
+    
+
     <script src="https://kit.fontawesome.com/0ed85649cd.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+    <script src="./page1.js"></script> 
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // 1. Get the data
+        const propertyDataString = sessionStorage.getItem('selectedProperty');
+        
+        if (!propertyDataString) {
+            console.log("No property data found. Showing default page.");
+            return;
+        }
+        
+        const propertyData = JSON.parse(propertyDataString);
+
+        // --- Helper Function for "More Info" section ---
+        const updateMoreInfo = (qn, data) => {
+            const qnSpan = Array.from(document.querySelectorAll('.minfo .qn'))
+                                .find(span => span.textContent.includes(qn));
+            if (qnSpan) {
+                const parent = qnSpan.closest('.minfo');
+                if (data) {
+                    const ansSpan = qnSpan.parentElement.querySelector('.ans');
+                    if (ansSpan) ansSpan.textContent = data;
+                    if (parent) parent.style.display = 'block';
+                } else {
+                    if (parent) parent.style.display = 'none';
+                }
+            }
+        };
+
+        // --- 2. Update Main Header Info ---
+        const priceMain = document.querySelector('.price span:first-child');
+        const priceSub = document.querySelector('.price span:nth-child(2)');
+        const emi = document.querySelector('.price p');
+        
+        if(priceMain) priceMain.textContent = propertyData.price;
+        if(priceSub) priceSub.textContent = propertyData.priceSub;
+        if(emi) emi.style.display = 'none'; 
+
+        const areaName = document.querySelector('.area p:first-child');
+        const areaInfo = document.querySelector('.area p:nth-child(2)');
+        const areaLoc = document.querySelector('.area p:nth-child(3)');
+
+        if(areaName) areaName.textContent = propertyData.name;
+        if(areaInfo) areaInfo.textContent = propertyData.info;
+        if(areaLoc) areaLoc.style.display = 'none'; 
+
+        // --- 3. Update Image Carousel ---
+        const carouselInner = document.querySelector('.carousel-inner');
+        if (carouselInner && propertyData.images && propertyData.images.length > 0) {
+            carouselInner.innerHTML = '';
+            propertyData.images.forEach((filename, index) => {
+                const div = document.createElement('div');
+                div.className = (index === 0) ? 'carousel-item active' : 'carousel-item';
+                const correctImgPath = `../../images/${filename}`;
+                div.innerHTML = `<img src="${correctImgPath}" class="d-block w-100" alt="Property Photo ${index + 1}">`;
+                carouselInner.appendChild(div);
+            });
+        }
+
+        // --- 4. Update Main Information Grid ---
+        if (propertyData.details) {
+            const d = propertyData.details;
+
+            document.querySelectorAll('.info').forEach(box => {
+                const titleEl = box.querySelector('.imgTitle p');
+                const valEl = box.querySelector('.paraInfo');
+                
+                if (titleEl && valEl) {
+                    const title = titleEl.textContent.trim();
+                    
+                    if (title === 'Area' && d.area) valEl.textContent = d.area;
+                    else if (title === 'Configuration' && d.config) valEl.textContent = d.config;
+                    else if (title === 'Price' && d.priceDetail) valEl.textContent = d.priceDetail;
+                    else if (title === 'Address' && d.address) valEl.textContent = d.address;
+                    else if (title === 'Floor number' && d.floor) valEl.textContent = d.floor;
+                    else if (title === 'Facing' && d.facing) valEl.textContent = d.facing;
+                    else if (title === 'Overlooking' && d.overlooking) valEl.textContent = d.overlooking;
+                    else if (title === 'Property' && d.age) valEl.textContent = d.age;
+                }
+            });
+
+            // --- 5. Update 'More Information' Strip ---
+            updateMoreInfo('Property Ownership', d.ownership);
+            updateMoreInfo('Flooring', d.flooring);
+            updateMoreInfo('Furnishing', d.furnishing);
+            updateMoreInfo('Parking', d.parking);
+            updateMoreInfo('Water Source', d.water);
+            updateMoreInfo('Power backup', d.power);
+            updateMoreInfo('Property code', d.code);
+
+            // --- 6. Update 'About Property' Section ---
+            const aboutAddr = document.querySelector('.aboutProperty .adrs p');
+            const aboutDetails = document.querySelector('.aboutProperty .details p');
+            
+            if (aboutAddr) {
+                if (d.address) {
+                    aboutAddr.innerHTML = `<strong>Address : </strong>${d.address}`;
+                } else {
+                    aboutAddr.style.display = 'none';
+                }
+            }
+            
+            if (aboutDetails && propertyData.about) {
+                aboutDetails.textContent = propertyData.about;
+            }
+        }
+        
+        // --- 7. Sections Visibility (RESTORED) ---
+        // I removed the lines that hid .status, .features, and .review
+        // They will now show up exactly as they are in your HTML.
+
+        // Update Owner Name
+        const ownerName = document.querySelector('.ownerDetails h6');
+        if (ownerName) {
+            ownerName.textContent = "Property Owner"; 
+        }
+    });
+</script>
 </body>
 </html>

@@ -112,7 +112,7 @@ const LoginPage = () => {
               <a href="#" onClick={(e) => { e.preventDefault(); setShowForgotModal(true); }}>
                 Forgot Password?
               </a> | 
-              <a href="#" onClick={(e) => { e.preventDefault(); handleSignupRedirect(); }}>
+              <a href="../SignUpPage.jsx" onClick={(e) => { e.preventDefault(); handleSignupRedirect(); }}>
                 Sign Up
               </a>
             </div>

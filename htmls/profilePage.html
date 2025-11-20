@@ -685,7 +685,6 @@
     </style>
 </head>
 <body class="bg-white text-gray-800">
-
     <nav class="bg-teal-800 text-white p-4 sticky top-0 z-50 shadow-md">
         <div class="container mx-auto flex items-center justify-center">
 
@@ -1004,6 +1003,79 @@
             const searchContainer = document.getElementById('searchContainer');
             const likedContainer = document.getElementById('likedContainer');
 
+            // ====== PASSWORD CHANGE FUNCTIONALITY ======
+            function changePassword() {
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                // Clear previous errors
+                const errorElements = document.querySelectorAll('.password-error');
+                errorElements.forEach(el => el.remove());
+
+                // Validation
+                let isValid = true;
+
+                if (!currentPassword) {
+                    showPasswordError('currentPassword', 'Current password is required');
+                    isValid = false;
+                }
+
+                if (!newPassword) {
+                    showPasswordError('newPassword', 'New password is required');
+                    isValid = false;
+                } else if (newPassword.length < 6) {
+                    showPasswordError('newPassword', 'Password must be at least 6 characters');
+                    isValid = false;
+                }
+
+                if (!confirmPassword) {
+                    showPasswordError('confirmPassword', 'Please confirm your new password');
+                    isValid = false;
+                } else if (newPassword !== confirmPassword) {
+                    showPasswordError('confirmPassword', 'Passwords do not match');
+                    isValid = false;
+                }
+
+                if (!isValid) return;
+
+                // Simulate password change
+                try {
+                    const users = JSON.parse(localStorage.getItem('users')) || [];
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    
+                    const userIndex = users.findIndex(user => user.email === currentUser.email);
+                    
+                    if (userIndex !== -1) {
+                        // In a real application, you should verify current password first
+                        // For demo purposes, we'll update directly
+                        users[userIndex].password = newPassword;
+                        localStorage.setItem('users', JSON.stringify(users));
+                    }
+
+                    // Clear form
+                    document.getElementById('currentPassword').value = '';
+                    document.getElementById('newPassword').value = '';
+                    document.getElementById('confirmPassword').value = '';
+
+                    // Success
+                    closeModal('changePasswordModal');
+                    alert('Password changed successfully!');
+                    
+                } catch (error) {
+                    alert('Error changing password. Please try again.');
+                    console.error('Password change error:', error);
+                }
+            }
+
+            function showPasswordError(fieldId, message) {
+                const field = document.getElementById(fieldId);
+                const errorElement = document.createElement('div');
+                errorElement.className = 'password-error text-red-500 text-xs mt-1';
+                errorElement.textContent = message;
+                field.parentNode.appendChild(errorElement);
+            }
+
             // ====== CORE FUNCTIONS ======
 
             function init() {
@@ -1273,6 +1345,19 @@
                 editProfileForm.addEventListener("submit", e => {
                     e.preventDefault();
                     saveProfile();
+                });
+
+                // Password change event listener
+                document.getElementById("savePasswordBtn").addEventListener("click", changePassword);
+
+                // Enter key support for password form
+                const passwordFields = ['currentPassword', 'newPassword', 'confirmPassword'];
+                passwordFields.forEach(fieldId => {
+                    document.getElementById(fieldId).addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter' && document.getElementById('changePasswordModal').classList.contains('active')) {
+                            changePassword();
+                        }
+                    });
                 });
 
                 // Image Upload Previews
